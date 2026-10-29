@@ -1,0 +1,49 @@
+# Mỗi lần đẩy lên nhánh main: chạy kiểm thử, nếu qua thì đăng web lên GitHub Pages.
+# Kiểm thử bao gồm việc so mọi hàm mô hình với đáp số in trong PDF,
+# nên một bài nhập sai số liệu sẽ chặn việc đăng web.
+name: Kiểm thử và đăng GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Gom các file của web
+        run: |
+          mkdir -p _site
+          cp -r index.html bai.html css js vendor .nojekyll _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
