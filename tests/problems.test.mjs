@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { PROBLEMS, CHAPTERS, SOURCES, PLANNED, THEORY_CHAPTERS, THEORY_EXERCISES, findStage, theoryForChapter } from '../js/data/index.js';
 import { existsSync, readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { PROBES } from '../js/data/theory/probes.js';
 import { givenValues, scopeOf, deg } from '../js/data/util.js';
 import { calc } from '../js/core/expr.js';
 import { checkFormula } from '../js/core/grader.js';
@@ -126,6 +127,14 @@ test('Lý thuyết 11 chương, 35 bài tập lý thuyết và cầu nối 31 b�
   }
 
   assert.equal(THEORY_EXERCISES.length, 35);
+  for (const ch of THEORY_CHAPTERS) {
+    for (const st of ch.stages) {
+      const pr = PROBES[st.id];
+      assert.ok(pr, `${st.id} thiếu câu dự đoán`);
+      assert.equal(pr.options.filter((o) => o.ok).length, 1, `${st.id} dự đoán phải có đúng 1 đáp án đúng`);
+      checkKatex(pr, `PROBES.${st.id}`);
+    }
+  }
   assert.equal(new Set(THEORY_EXERCISES.map((e) => e.id)).size, 35);
   const altForms = {
     'L1.3:A': 'M*L*L/(T*T)',

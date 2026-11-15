@@ -90,6 +90,12 @@
     check(true, 'Toàn bộ 11 trang lý thuyết mở được, công thức KaTeX hợp lệ');
 
     doc = await load('../lythuyet.html?ch=1');
+    const t11 = doc.querySelector('#T1\\.1');
+    check(!t11.hidden && t11.querySelector('[data-step="explain"]').hidden && doc.querySelector('#T1\\.2').hidden, 'Bài học hiện từng chặng, giải thích ẩn đến khi dự đoán');
+    t11.querySelector('.probe-root .option').click();
+    check(!t11.querySelector('[data-step="explain"]').hidden, 'Trả lời dự đoán mở phần giải thích');
+    doc.querySelector('[data-go="1"]').click();
+    check(doc.querySelector('#T1\\.1').hidden && !doc.querySelector('#T1\\.2').hidden, 'Chuyển sang chặng kế tiếp');
     const l12 = doc.querySelector('[data-ex="L1.2"]');
     const wrongOpt = [...l12.querySelectorAll('.option')].find((b) => b.textContent.includes('chắc chắn đúng hoàn toàn'));
     wrongOpt.click();
