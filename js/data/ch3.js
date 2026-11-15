@@ -28,7 +28,7 @@ const NEWTON_FRAME = {
 
 export default [
   {
-    id: '3.1', star: true, ch: 2, oldCh: 3, page: 2,
+    id: '3.1', star: true, ch: 3, oldCh: 3, page: 2,
     title: 'Hệ vật trên mặt phẳng nghiêng có ròng rọc',
     group: 'rong-roc', fade: 0,
     statement: t`Một vật A khối lượng $m_1 = 3$ kg nằm trên mặt phẳng nghiêng góc $\alpha = 30^\circ$ so với phương nằm ngang. Vật A được nối với B có khối lượng $m_2 = 2$ kg bằng một sợi dây không co dãn qua một ròng rọc cố định. Hãy xác định gia tốc chuyển động của các vật, lực căng của dây và áp lực lên ròng rọc. Bỏ qua khối lượng sợi dây, ròng rọc và ma sát giữa dây với ròng rọc. Cho biết hệ số ma sát giữa vật A và mặt phẳng nghiêng $\mu = 0{,}1$.`,
@@ -74,7 +74,7 @@ export default [
     ],
   },
   {
-    id: '3.2', star: true, ch: 2, oldCh: 3, page: 2,
+    id: '3.2', star: true, ch: 3, oldCh: 3, page: 2,
     title: 'Hệ số ma sát từ thời gian lên và xuống dốc',
     group: 'nghieng-ma-sat', fade: 0,
     statement: t`Một vật được ném lên theo mặt phẳng nghiêng tạo với phương nằm ngang góc $\alpha = 15^\circ$. Tính hệ số ma sát giữa vật và mặt phẳng nghiêng. Biết rằng thời gian đi xuống của vật bằng $n = 2$ lần thời gian đi lên.`,
@@ -110,7 +110,7 @@ export default [
     ],
   },
   {
-    id: '3.3', star: true, ch: 2, oldCh: 3, page: 2,
+    id: '3.3', star: true, ch: 3, oldCh: 3, page: 2,
     title: 'Con lắc nón',
     group: 'tron', fade: 0,
     statement: t`Một vật khối lượng $m = 1$ kg buộc vào đầu dây có chiều dài là $\ell = 30$ cm, đầu kia của dây được giữ cố định tại điểm O. Cho vật chuyển động tròn trong mặt phẳng ngang, còn sợi dây hợp với phương thẳng đứng góc $\alpha = 60^\circ$. Hãy xác định vận tốc $\upsilon$, sức căng $T$ của dây.`,
@@ -152,7 +152,7 @@ export default [
     ],
   },
   {
-    id: '3.4', star: true, ch: 2, oldCh: 3, page: 2,
+    id: '3.4', star: true, ch: 3, oldCh: 3, page: 2,
     title: 'Người trong thang máy',
     group: 'phi-quan-tinh', fade: 0,
     statement: t`Một người khối lượng $m_1 = 60$ kg đứng trong thang máy có khối lượng $m_2 = 300$ kg. Thang máy chuyển động lên trên với gia tốc $a = 0{,}8$ m/s². Tính lực căng của dây cáp treo thang máy, lực người đó nén lên sàn, trong hai trường hợp thang máy chuyển động: a) nhanh dần đều; b) chậm dần đều.`,
@@ -197,7 +197,7 @@ export default [
     ],
   },
   {
-    id: '3.5', star: true, ch: 2, oldCh: 3, page: 2,
+    id: '3.5', star: true, ch: 3, oldCh: 3, page: 2,
     title: 'Người tự kéo sàn treo',
     group: 'rong-roc', fade: 2,
     statement: t`Một người nặng 72 kg ngồi trên sàn treo nặng 12 kg như hình vẽ. Hỏi người đó phải kéo dây với một lực bằng bao nhiêu để sàn chuyển động nhanh dần đều lên cao được 3 m trong thời gian là 2 s. Tính áp lực của người đó lên sàn.`,
@@ -242,7 +242,7 @@ export default [
     ],
   },
   {
-    id: '3.6', star: true, ch: 2, oldCh: 3, page: 3,
+    id: '3.6', star: true, ch: 3, oldCh: 3, page: 3,
     title: 'Hệ ròng rọc động',
     group: 'rong-roc', fade: 3,
     statement: t`Hãy xác định gia tốc của các vật $m_1$, $m_2$ và các lực căng $T$ của các dây trong hệ mô tả trên hình vẽ. Cho biết dây không co dãn, bỏ qua ma sát, khối lượng của ròng rọc và dây không đáng kể.`,
@@ -279,7 +279,7 @@ export default [
     ],
   },
   {
-    id: '3.7', star: false, ch: 2, oldCh: 3, page: 3,
+    id: '3.7', star: false, ch: 3, oldCh: 3, page: 3,
     title: 'Vòng trượt dọc sợi dây',
     group: 'rong-roc', fade: 1,
     statement: t`Một vật A khối lượng $m_1$ buộc vào một đầu dây vắt qua ròng rọc, đầu kia là một vòng B khối lượng $m_2$ có thể trượt dọc sợi dây. Tính gia tốc chuyển động của vòng B, lực ma sát giữa sợi dây và B khi A chuyển động đều, nếu ban đầu hệ đứng yên. Bỏ qua khối lượng của ròng rọc và ma sát.`,
@@ -319,7 +319,7 @@ export default [
     ],
   },
   {
-    id: '3.8', star: true, ch: 2, oldCh: 3, page: 3,
+    id: '3.8', star: true, ch: 3, oldCh: 3, page: 3,
     title: 'Vật trên nêm chuyển động có gia tốc',
     group: 'phi-quan-tinh', fade: 3,
     statement: t`Một vật khối lượng $m$ đứng yên trên đỉnh một mặt phẳng nghiêng nhờ lực ma sát. Cho biết chiều dài mặt phẳng nghiêng $S = 1$ m, góc $\alpha = 30^\circ$, hệ số ma sát giữa vật và mặt phẳng nghiêng $\mu = 0{,}6$. Hỏi: Mặt phẳng nghiêng có thể chuyển động với gia tốc $a_{\max}$ (so với mặt đất) là bao nhiêu để vật vẫn đứng yên trên nêm. Nếu gia tốc chuyển động của mặt phẳng nghiêng là $a_0 = 1$ m/s² thì sau bao nhiêu lâu vật sẽ trượt đến chân mặt phẳng nghiêng.`,
@@ -366,7 +366,7 @@ export default [
     ],
   },
   {
-    id: '3.9', star: false, ch: 2, oldCh: 3, page: 3,
+    id: '3.9', star: false, ch: 3, oldCh: 3, page: 3,
     title: 'Mặt nước trong chậu trượt trên dốc',
     group: 'phi-quan-tinh', fade: 2,
     statement: t`Một chậu nước trượt trên mặt dốc có góc nghiêng so với phương ngang là $\alpha$. Hệ số ma sát trượt giữa chậu và mặt dốc là $\mu < \mathrm{tg}\,\alpha$. Hãy xác định góc nghiêng $\beta$ của mặt nước so với mặt dốc.`,
@@ -385,7 +385,7 @@ export default [
     ],
   },
   {
-    id: '3.10', star: false, ch: 2, oldCh: 3, page: 3,
+    id: '3.10', star: false, ch: 3, oldCh: 3, page: 3,
     title: 'Cân bàn trên xe trượt dốc',
     group: 'phi-quan-tinh', fade: 1,
     statement: t`Một người đứng trên cân bàn đặt trên xe nhỏ. Khi xe chuyển động không ma sát trên mặt phẳng nghiêng một góc $\alpha$ so với phương nằm ngang thì người đó thấy trọng lượng của mình chỉ còn bằng 3/4 trọng lượng khi xe đứng yên. Hãy xác định góc $\alpha$.`,
@@ -404,7 +404,7 @@ export default [
     ],
   },
   {
-    id: '3.11', star: false, ch: 2, oldCh: 3, page: 4,
+    id: '3.11', star: false, ch: 3, oldCh: 3, page: 4,
     title: 'Con khỉ leo dây qua ròng rọc',
     group: 'rong-roc', fade: 4,
     statement: t`Một sợi dây không co dãn vắt qua một ròng rọc cố định có khối lượng không đáng kể. Một đầu dây treo một vật khối lượng $m$, đầu dây kia có một con khỉ khối lượng $2m$ bám vào. Con khỉ leo lên dây với gia tốc $a'$, so với dây. Hãy tìm gia tốc $a$ của con khỉ đối với mặt đất.`,
@@ -425,7 +425,7 @@ export default [
     ],
   },
   {
-    id: '3.12', star: false, ch: 2, oldCh: 3, page: 4,
+    id: '3.12', star: false, ch: 3, oldCh: 3, page: 4,
     title: 'Lực Coriolis làm nghiêng mặt nước sông',
     group: 'phi-quan-tinh', fade: 4,
     statement: t`Sự quay của trái đất xung quanh trục của mình làm mặt nước trên các sông không nằm trong mặt phẳng nằm ngang. Hãy xác định phía bờ sông bên nào mức nước sẽ cao hơn và tính độ chênh lệch mức nước đó, biết rằng sông nằm ở bán cầu phía bắc và chảy từ bắc xuống nam. Độ rộng sông là $\ell$, vận tốc dòng chảy là $\upsilon$, vĩ độ nơi đó là $\varphi$, vận tốc góc của trái đất quay quanh trục là $\omega$, bỏ qua lực quán tính ly tâm.`,
@@ -462,7 +462,7 @@ export default [
     ],
   },
   {
-    id: '3.13', star: false, ch: 2, oldCh: 3, page: 4,
+    id: '3.13', star: false, ch: 3, oldCh: 3, page: 4,
     title: 'Áp lực của đường ray ở xích đạo',
     group: 'phi-quan-tinh', fade: 5,
     statement: t`Một đoàn tầu hỏa khối lượng $m$ đang chuyển động dọc theo đường xích đạo từ đông sang tây với vận tốc $\upsilon$ tương đối so với mặt đất. Biết rằng Trái đất luôn quay quanh trục của mình với vận tốc góc là $\omega$, bỏ qua ma sát, hãy xác định lực tác dụng của đường ray lên đoàn tầu.`,
@@ -484,7 +484,7 @@ export default [
     ],
   },
   {
-    id: '3.14', star: false, ch: 2, oldCh: 3, page: 4,
+    id: '3.14', star: false, ch: 3, oldCh: 3, page: 4,
     title: 'Mặt nước trong cốc quay',
     group: 'phi-quan-tinh', fade: 6,
     statement: t`Một cái cốc đựng nước hình trụ quay quanh trục đối xứng hướng theo phương thẳng đứng với vận tốc góc là $\omega$. Hãy xác định phương trình mô tả dạng mặt nước trong cốc.`,

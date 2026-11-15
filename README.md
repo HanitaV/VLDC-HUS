@@ -1,6 +1,6 @@
 # Tiệm Cận – Vật lý Đại cương 1
 
-Web tĩnh luyện bài tập Cơ – Nhiệt cho học phần **PHY1159** (Trường ĐH Khoa học Tự nhiên, ĐHQGHN). Mỗi bài trong file "Bài tập Cơ – Nhiệt" (bắt buộc) được tách thành các bước có chấm:
+Web tĩnh luyện bài tập Cơ – Nhiệt cho học phần **PHY1159** (Trường ĐH Khoa học Tự nhiên, ĐHQGHN). Mỗi bài đã nhập từ file "Bài tập Cơ – Nhiệt" (bắt buộc) được tách thành các bước có chấm, tùy nội dung bài:
 
 1. Dự đoán hiện tượng (mô phỏng chỉ mở sau khi đã dự đoán)
 2. Chọn hệ quy chiếu
@@ -12,11 +12,17 @@ Bên dưới là lời giải mẫu, ẩn dần các bước cuối theo thứ t
 
 ## Trạng thái
 
-| Chương PHY1159 | Bài tập (số hiệu file gốc) | Trạng thái |
+| Chương PHY1159 | Lý thuyết &amp; Bài tập | Trạng thái |
 | --- | --- | --- |
-| 1. Động học chất điểm | 2.1–2.7 | Đã có, mô phỏng diện tích cho 2.1 |
-| 2. Động lực học chất điểm | 3.1–3.14 | Đã có, mô phỏng 3.1, sơ đồ lực cho 3.1–3.8 |
-| 3–9 | 4.1–11.9 | Chưa nhập |
+| 1, 7, 8 | Lý thuyết logic + L1.1–L1.3, L7.1–L7.3, L8.1–L8.3 | Đầy đủ lý thuyết &amp; bài tập lý thuyết tương tác |
+| 2. Động học chất điểm | Lý thuyết + L2.1–L2.3 + Bài 2.1–2.7 | Lý thuyết logic gắn kết trực tiếp với 7 bài tính toán &amp; mô phỏng |
+| 3. Động lực học chất điểm | Lý thuyết + L3.1–L3.5 + Bài 3.1–3.14 | Lý thuyết logic gắn kết với 14 bài tính toán &amp; sơ đồ lực |
+| 4. Công và năng lượng | Lý thuyết + L4.1–L4.3 + Bài 4.1–4.10 | Lý thuyết logic gắn kết với 10 bài tính toán |
+| 5, 6, 9, 10, 11 | Lý thuyết + L5.1–L11.3 + Bài 5.1–11.9 (PDF) | Lý thuyết logic &amp; bài tập lý thuyết tương tác + liên kết từng bài trong PDF |
+
+Mục lục dùng **11 chương của `docs/pdf_slides_from_teacher/De cuong Co-Nhiet.pdf`**. Toàn bộ 11 chương đều có trang lý thuyết theo mạch logic (`lythuyet.html?ch=N`) kèm 35 bài tập lý thuyết (`L1.1`–`L11.3`), kết hợp hai chiều với 31 bài tính toán (`2.1`–`4.10`), tìm kiếm không dấu, lọc theo tiến độ và xuất/nhập tiến độ bằng JSON. Liên kết tài liệu dùng đường dẫn tương đối, chạy được trong GitHub Pages đặt dưới tên repo.
+
+Các quyết định đối chiếu tài liệu, quy ước vật lý và giới hạn kiểm tra được ghi trong [docs/RESEARCH.md](docs/RESEARCH.md).
 
 Đính chính đã ghi trên web: Bài 3.8 (đáp số thời gian và công thức a_max in sai trong PDF).
 
@@ -40,17 +46,20 @@ Phải mở qua server cục bộ, không mở trực tiếp file `index.html`, 
 ## Cấu trúc
 
 ```
-index.html, bai.html     hai trang duy nhất; bai.html?id=3.1 mở Bài 3.1
-css/style.css            giao diện
-js/core/expr.js          bộ phân tích biểu thức an toàn (không dùng eval), xuất LaTeX
-js/core/grader.js        chấm công thức bằng thử số ngẫu nhiên; chấm đáp số sai số 1%
-js/core/progress.js      lưu tiến độ trong localStorage
-js/data/ch2.js, ch3.js   đề, số liệu, đáp án, hàm mô hình, lời giải mẫu của từng bài
-js/data/forces.js        danh mục loại lực và bộ chấm sơ đồ lực
-js/sims/                 mô phỏng, vẽ thẳng từ nghiệm giải tích của hàm mô hình
-js/ui/                   công cụ sơ đồ lực, hình vẽ, hiển thị KaTeX
-vendor/                  KaTeX và font, đóng gói sẵn để không phụ thuộc CDN
-tests/                   kiểm thử: mô hình = công thức đáp án = số in trong PDF
+index.html, bai.html, lythuyet.html   mục lục 11 chương, trang luyện bài tính toán, trang lý thuyết & bài tập logic
+css/style.css                       giao diện
+js/core/expr.js                     bộ phân tích biểu thức an toàn (không dùng eval), xuất LaTeX
+js/core/grader.js                   chấm công thức, chấm đáp số sai số 1%, chấm sắp xếp suy luận
+js/core/progress.js                 lưu tiến độ bài tính toán và bài lý thuyết trong localStorage
+js/data/ch2.js–ch4.js               đề, số liệu, đáp án, hàm mô hình, lời giải mẫu của từng bài
+js/data/theory/                     mạch suy luận 11 chương (mech.js, thermo.js) và 35 bài tập lý thuyết
+js/data/problemLogic.js             cầu nối lý thuyết theo logic cho 31 bài tính toán
+js/data/sources.js                  11 chương và đường dẫn tài liệu gốc
+js/data/forces.js                   danh mục loại lực và bộ chấm sơ đồ lực
+js/sims/                            mô phỏng, vẽ thẳng từ nghiệm giải tích của hàm mô hình
+js/ui/                              công cụ sơ đồ lực, thành phần trắc nghiệm/công thức/sắp xếp, hình vẽ, KaTeX
+vendor/                             KaTeX và font, đóng gói sẵn để không phụ thuộc CDN
+tests/                              kiểm thử: mô hình = công thức = số PDF, và mạch logic 11 chương
 ```
 
 ## Thêm một bài mới
@@ -69,7 +78,7 @@ Sau khi thêm, chạy `npm test`. Kiểm thử sẽ báo nếu hàm mô hình l�
 
 ## Nguồn và giấy phép
 
-- Đề bài: "Bài tập Cơ – Nhiệt" (bắt buộc) và đề cương học phần PHY1159, Khoa Vật lý, ĐHKHTN, ĐHQGHN. Đề được chép nguyên văn để học tập.
+- Đề bài: "Bài tập Cơ – Nhiệt" (bắt buộc) và đề cương trong `docs/pdf_slides_from_teacher/`. Bài 2–3 được chép theo tài liệu; bài 4.1–4.10 được diễn đạt lại, bổ sung mô tả hình bằng chữ và ghi rõ giả thiết để tự luyện. Số liệu tự chọn được đánh dấu trên trang bài.
 - [KaTeX](https://katex.org) – giấy phép MIT (`vendor/katex/LICENSE`).
 - Font Be Vietnam Pro và Noto Serif – SIL Open Font License 1.1 (`vendor/fonts/`).
 - Mã nguồn của dự án: MIT.

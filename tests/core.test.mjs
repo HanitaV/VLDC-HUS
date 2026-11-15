@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { calc, parse, ExprError } from '../js/core/expr.js';
-import { checkFormula, checkNumber, parseNumber, fmt } from '../js/core/grader.js';
+import { calc, parse, toTex, ExprError } from '../js/core/expr.js';
+import { checkFormula, checkNumber, parseNumber, fmt, shuffleOrder, gradeOrder } from '../js/core/grader.js';
 import { gradeBody } from '../js/data/forces.js';
 
 test('bộ tính: thứ tự phép toán, nhân ngầm, hàm, chữ Hy Lạp', () => {
@@ -45,6 +45,10 @@ test('chấm đáp số: dấu phẩy thập phân, sai số 1%, gợi ý đơn 
   assert.equal(checkNumber('-18,7', 18.66).code, 'sign');
   assert.equal(checkNumber('1430', 1.4331).code, 'unit');
   assert.equal(checkNumber('abc', 1).code, 'syntax');
+  for (const invalid of ['1/0', '-1/0', 'sqrt(-1)', '10^999']) {
+    assert.equal(checkNumber(invalid, 123).code, 'domain');
+    assert.equal(checkNumber(invalid, 0).ok, false);
+  }
 });
 
 test('định dạng số kiểu Việt Nam', () => {
@@ -64,4 +68,20 @@ test('chấm sơ đồ lực', () => {
   const two = [{ type: 'T', angle: 90 }, { type: 'T', angle: 90 }, { type: 'P', angle: 270 }];
   assert.ok(gradeBody([{ type: 'T', angle: 92 }, { type: 'P', angle: 270 }, { type: 'T', angle: 88 }], two).ok);
   assert.equal(gradeBody([{ type: 'T', angle: 92 }, { type: 'P', angle: 270 }], two).ok, false);
+});
+
+test('ký hiệu nhiệt học ΔT, T_F và chấm sắp xếp thứ tự suy luận', () => {
+  assert.equal(toTex(parse('dT')), '\\Delta T');
+  assert.equal(toTex(parse('Tf')), 'T_F');
+  assert.equal(calc('m*(lambda + c*dT)', { m: 2, lambda: 334000, c: 4180, dT: 10 }), 751600);
+  const shuffled = shuffleOrder(4, 'L1.1');
+  assert.deepEqual([...shuffled].sort(), [0, 1, 2, 3]);
+  assert.notDeepEqual(shuffled, [0, 1, 2, 3]);
+  assert.deepEqual(shuffleOrder(4, 'L1.1'), shuffled);
+  assert.equal(gradeOrder([0, 1, 2, 3], 4).ok, true);
+  const partial = gradeOrder([1, 0, 2, 3], 4);
+  assert.equal(partial.ok, false);
+  assert.equal(partial.rightCount, 2);
+  assert.equal(partial.firstWrong, 0);
+  assert.deepEqual(partial.matches, [false, false, true, true]);
 });

@@ -1,4 +1,4 @@
-// Hiển thị công thức bằng KaTeX (nạp từ CDN). Nếu KaTeX không tải được, hiện nguyên văn.
+// Hiển thị công thức bằng KaTeX đóng gói trong vendor/. Nếu không tải được, hiện nguyên văn.
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
 export function tex(src, display = false) {

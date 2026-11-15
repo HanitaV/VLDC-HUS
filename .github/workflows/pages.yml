@@ -41,7 +41,9 @@ jobs:
       - name: Gom các file của web
         run: |
           mkdir -p _site
-          cp -r index.html bai.html css js vendor .nojekyll _site/
+          cp -r index.html bai.html lythuyet.html css js vendor .nojekyll _site/
+          mkdir -p _site/docs
+          cp -r docs/pdf_slides_from_teacher _site/docs/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

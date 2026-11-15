@@ -92,6 +92,7 @@ export function checkNumber(input, target, rel = 0.01) {
     if (e instanceof ExprError) return { ok: false, code: 'syntax', message: e.message };
     throw e;
   }
+  if (!Number.isFinite(x)) return { ok: false, code: 'domain', message: 'Đáp số phải là số hữu hạn. Kiểm tra phép chia cho 0, căn số âm hoặc số mũ quá lớn.' };
   if (close(x, target, rel)) return { ok: true, code: 'ok', value: x, message: 'Đúng.' };
   if (close(x, -target, rel)) return { ok: false, code: 'sign', value: x, message: 'Sai dấu. Độ lớn đúng nhưng dấu ngược lại.' };
   for (const p of [1e3, 1e-3, 1e2, 1e-2, 3.6, 1 / 3.6]) {
@@ -118,4 +119,39 @@ export function fmt(x, sig = 3) {
 }
 function trim(s) {
   return s.includes('.') ? s.replace(/0+$/, '').replace(/\.$/, '') : s;
+}
+
+/** Xáo trộn thứ tự các bước suy luận một cách lặp lại được và không trùng đáp án. */
+export function shuffleOrder(n, seedKey = 'order') {
+  const arr = Array.from({ length: n }, (_, i) => i);
+  if (n < 2) return arr;
+  let h = 2166136261;
+  for (const ch of String(seedKey)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  const rand = rng(h >>> 0);
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  if (arr.every((v, i) => v === i)) [arr[0], arr[1]] = [arr[1], arr[0]];
+  return arr;
+}
+
+/** Chấm thứ tự một chuỗi suy luận logic: trả về số bước đúng vị trí và vị trí lệch đầu tiên. */
+export function gradeOrder(order, total) {
+  if (!Array.isArray(order) || order.length !== total) {
+    return { ok: false, rightCount: 0, matches: [], firstWrong: 0, message: 'Số bước chưa khớp.' };
+  }
+  const matches = order.map((idx, pos) => idx === pos);
+  const rightCount = matches.filter(Boolean).length;
+  if (rightCount === total) {
+    return { ok: true, rightCount, matches, firstWrong: -1, message: 'Đúng. Mạch suy luận liền từ giả thiết đến kết luận.' };
+  }
+  const firstWrong = matches.indexOf(false);
+  return {
+    ok: false,
+    rightCount,
+    matches,
+    firstWrong,
+    message: `Lệch từ bước ${firstWrong + 1}/${total} (đúng ${rightCount}/${total} vị trí). Kiểm tra xem bước ${firstWrong + 1} đã kế thừa trực tiếp kết quả của bước ${firstWrong || 'đầu'} chưa.`,
+  };
 }

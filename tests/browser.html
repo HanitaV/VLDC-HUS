@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<title>Kiểm tra luồng học Tiệm Cận</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>body{padding:24px}iframe{width:390px;height:844px;border:1px solid #888}#results{white-space:pre-wrap}</style>
+<h1>Kiểm tra luồng học</h1>
+<p>Chạy qua HTTP. Kiểm tra dùng dữ liệu tạm và khôi phục tiến độ của trình duyệt khi kết thúc.</p>
+<pre id="results">Đang chạy…</pre>
+<iframe title="Trang đang kiểm tra"></iframe>
+<script type="module">
+  import { byId, PROBLEMS } from '../js/data/index.js';
+  import { givenValues } from '../js/data/util.js';
+  const key = 'tiemcan-vldc1-progress-v1';
+  const before = localStorage.getItem(key);
+  const frame = document.querySelector('iframe');
+  const result = document.getElementById('results');
+  const lines = [];
+  const check = (ok, name) => { if (!ok) throw new Error(name); lines.push(`PASS ${name}`); result.textContent = lines.join('\n'); };
+  const load = (url) => new Promise((resolve, reject) => {
+    frame.onload = () => resolve(frame.contentDocument);
+    frame.onerror = reject;
+    frame.src = url;
+  });
+  const input = (doc, selector, value) => {
+    const el = doc.querySelector(selector);
+    el.value = value;
+    el.dispatchEvent(new frame.contentWindow.Event('input', { bubbles: true }));
+    return el;
+  };
+  const clickCheck = (doc, selector) => doc.querySelector(selector).closest('.field').querySelector('[data-check]').click();
+  try {
+    localStorage.setItem(key, '{}');
+    let doc = await load('../index.html');
+    check(doc.querySelectorAll('.toc-ch').length === 11 && doc.querySelectorAll('.chips .chip').length === 31 && doc.querySelectorAll('.tchips .tchip').length === 35, 'Mục lục 11 chương, 35 bài lý thuyết, 31 bài tính toán');
+    input(doc, '#search', 'ĐỘNG HỌC');
+    check(doc.querySelectorAll('.toc-ch').length === 2, 'Tìm kiếm chữ hoa có dấu');
+    input(doc, '#search', 'ma sat');
+    check(doc.querySelectorAll('.chips .chip').length > 0, 'Tìm kiếm tiếng Việt không dấu');
+    input(doc, '#search', '4.10');
+    check(doc.querySelectorAll('.chips .chip').length === 1 && doc.querySelector('.chips .chip').href.endsWith('bai.html?id=4.10'), 'Tìm đúng số bài');
+    input(doc, '#search', 'khongtontai');
+    check(!!doc.querySelector('.empty-results'), 'Trạng thái không có kết quả');
+    localStorage.setItem(key, JSON.stringify({ '2.1': { number: true } }));
+    doc = await load('../index.html');
+    const status = doc.querySelector('#status');
+    status.value = 'done';
+    status.dispatchEvent(new frame.contentWindow.Event('change'));
+    check(doc.querySelectorAll('.chips .chip').length === 1 && doc.querySelector('.chip.done'), 'Lọc bài hoàn thành');
+
+    localStorage.setItem(key, '{}');
+    doc = await load('../bai.html?id=4.4');
+    input(doc, '#f-0', 'H/2'); clickCheck(doc, '#f-0');
+    input(doc, '#f-0', 'H/3');
+    input(doc, '#f-1', 'H'); clickCheck(doc, '#f-1');
+    check(JSON.parse(localStorage.getItem(key))['4.4'].formula === false, 'Công thức đã sửa phải được chấm lại');
+    const p = byId('4.4');
+    const numbers = p.model(givenValues(p));
+    input(doc, '#n-0', String(numbers.h)); clickCheck(doc, '#n-0');
+    input(doc, '#n-0', '999');
+    input(doc, '#n-1', String(numbers.S)); clickCheck(doc, '#n-1');
+    check(JSON.parse(localStorage.getItem(key))['4.4'].number === false, 'Đáp số đã sửa không được tính đúng cũ');
+    input(doc, '#n-0', '1/0'); clickCheck(doc, '#n-0');
+    check(doc.querySelector('#n-0').closest('.field').querySelector('.feedback.bad').textContent.includes('hữu hạn') && JSON.parse(localStorage.getItem(key))['4.4'].number === false, 'Phép chia cho không không được chấm đúng');
+
+    localStorage.setItem(key, '{}');
+    doc = await load('../bai.html?id=4.9');
+    input(doc, '#f-0', '(m*v/M)^2/(2*mu*g)'); clickCheck(doc, '#f-0');
+    doc.querySelector('[data-act="vary"]').click();
+    const data = givenValues(byId('4.9'));
+    const shown = doc.querySelector('.given tbody tr:nth-child(3) td').textContent;
+    data.v = Number(shown.match(/=\s*([\d,]+)/)[1].replace(',', '.'));
+    input(doc, '#n-0', String(byId('4.9').model(data).S)); clickCheck(doc, '#n-0');
+    check(JSON.parse(localStorage.getItem(key))['4.9'].number !== true, 'Đổi số liệu không ghi hoàn thành đề gốc');
+    for (const p of PROBLEMS) {
+      doc = await load(`../bai.html?id=${p.id}`);
+      if (doc.querySelector('h1')?.textContent !== p.title || !doc.querySelector('.steps') || doc.querySelector('.katex-error')) throw new Error(`Bài ${p.id} không hiển thị đúng`);
+    }
+    check(true, 'Toàn bộ 31 trang bài mở được, công thức KaTeX hợp lệ');
+    doc = await load('../bai.html?id=khong-co');
+    check(doc.querySelector('h1').textContent.includes('Không tìm thấy'), 'Đường dẫn bài sai có hướng dẫn quay về');
+
+    localStorage.setItem(key, '{}');
+    for (let ch = 1; ch <= 11; ch++) {
+      doc = await load(`../lythuyet.html?ch=${ch}`);
+      if (!doc.querySelector('.logic-stage') || !doc.querySelector('.theory-ex') || doc.querySelector('.katex-error')) {
+        throw new Error(`Trang lý thuyết chương ${ch} hiển thị lỗi`);
+      }
+    }
+    check(true, 'Toàn bộ 11 trang lý thuyết mở được, công thức KaTeX hợp lệ');
+
+    doc = await load('../lythuyet.html?ch=1');
+    const l12 = doc.querySelector('[data-ex="L1.2"]');
+    const wrongOpt = [...l12.querySelectorAll('.option')].find((b) => b.textContent.includes('chắc chắn đúng hoàn toàn'));
+    wrongOpt.click();
+    check(wrongOpt.disabled && !l12.classList.contains('done'), 'Trắc nghiệm lý thuyết cho giải thích và thử lại khi sai');
+    const rightOpt = [...l12.querySelectorAll('.option')].find((b) => b.textContent.includes('chưa kết luận được'));
+    rightOpt.click();
+    check(l12.classList.contains('done') && JSON.parse(localStorage.getItem(key))['L1.2'].theory === true, 'Hoàn thành trắc nghiệm lý thuyết lưu tiến độ');
+
+    input(doc, '#f-L1\\.3-0', 'M*L*L/T^2'); clickCheck(doc, '#f-L1\\.3-0');
+    input(doc, '#f-L1\\.3-1', 'M/(L*T^2)'); clickCheck(doc, '#f-L1\\.3-1');
+    check(doc.querySelector('[data-ex="L1.3"]').classList.contains('done') && JSON.parse(localStorage.getItem(key))['L1.3'].theory === true, 'Lập biểu thức lý thuyết chấp nhận dạng tương đương và lưu tiến độ');
+
+    const l11 = doc.querySelector('[data-ex="L1.1"]');
+    l11.querySelector('[data-check]').click();
+    check(!!l11.querySelector('.feedback.bad'), 'Kiểm tra thứ tự suy luận phát hiện vị trí sai');
+
+    doc = await load('../bai.html?id=2.2');
+    const bridgeLink = doc.querySelector('.theory-bridge a.resource-link');
+    check(!!bridgeLink && bridgeLink.getAttribute('href') === 'lythuyet.html?ch=2#T2.1' && !!doc.querySelector('#f-0'), 'Cầu nối lý thuyết liên kết đúng chặng và không khóa bước tính toán');
+    const bRight = [...doc.querySelectorAll('#logic-check-root .option')].find((b) => b.textContent.includes('chỉ tích phân diện tích'));
+    bRight.click();
+    check(JSON.parse(localStorage.getItem(key))['2.2'].logic === true, 'Kiểm tra nhanh logic trên trang bài lưu kết quả');
+
+    doc = await load('../index.html');
+    check(doc.querySelector('.tchip[href$="#L1.2"].done') && doc.querySelector('.tchip[href$="#L1.3"].done'), 'Trang chủ đánh dấu hoàn thành các bài lý thuyết đã làm');
+    result.textContent += `\n\nPASS: ${lines.length} luồng kiểm tra`;
+  } catch (error) {
+    result.textContent += `\nFAIL: ${error.message}`;
+    document.title = 'FAIL: ' + error.message;
+    console.error(error);
+  } finally {
+    if (before === null) localStorage.removeItem(key); else localStorage.setItem(key, before);
+  }
+</script>
+</html>

@@ -1,8 +1,11 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-type="software">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <meta name="theme-color" content="#f2f4f7">
   <title>Vật lý Đại cương 1 – Tiệm Cận</title>
   <meta name="description" content="Luyện bài tập Cơ – Nhiệt học phần PHY1159 (ĐHKHTN, ĐHQGHN) theo từng bước: dự đoán, mô phỏng, sơ đồ lực, lập công thức, thay số.">
   <link rel="stylesheet" href="vendor/fonts/fonts.css">
@@ -11,16 +14,47 @@
 <body>
   <header class="site-head">
     <div class="inner">
+      <a class="skip-link" href="#main">Đến nội dung</a>
       <a class="brand" href="./">Tiệm Cận <small>Vật lý Đại cương 1</small></a>
+      <nav class="head-links" aria-label="Điều hướng"><a href="lythuyet.html?ch=1">Lý thuyết</a><a href="#chuong">Bài tập</a><a href="#tai-lieu">Tài liệu</a></nav>
     </div>
   </header>
-  <main>
-    <section class="home-intro">
-      <h1>Giải bài tập Cơ – Nhiệt từng bước một</h1>
-      <p>Mỗi bài trong file bài tập bắt buộc của học phần PHY1159 được tách thành các bước: dự đoán hiện tượng, quan sát mô phỏng, vẽ sơ đồ lực, lập công thức rồi mới thay số. Web chấm từng bước và chỉ ra sai ở đâu.</p>
-      <p>Bài có dấu <span style="color:var(--force);font-weight:600">*</span> là bài đánh dấu sao trong file gốc. Số hiệu bài giữ nguyên theo file bài tập để bạn dễ đối chiếu.</p>
+  <main id="main" tabindex="-1">
+    <section class="home-intro" data-enter>
+      <div>
+        <p class="eyebrow">Cơ – Nhiệt · Lý thuyết logic gắn với bài tập</p>
+        <h1>Hiểu bản chất theo logic, làm bài tập từng bước.</h1>
+        <p>Mỗi chương đi từ hiện tượng xuất phát đến quy luật, bẫy hay sai và cách vận dụng, nối thẳng sang bài tập lý thuyết và tính toán tương tác.</p>
+        <div class="row">
+          <a class="btn" id="continue" href="bai.html?id=2.1">Bắt đầu luyện bài</a>
+          <a class="btn ghost" id="start-theory" href="lythuyet.html?ch=1">Học lý thuyết Chương 1</a>
+        </div>
+        <p class="home-fact" id="home-fact"></p>
+      </div>
+      <aside class="study-card" aria-label="Cách học và luyện bài">
+        <p class="eyebrow">Một mạch xuyên suốt 11 chương</p>
+        <ol><li>Nắm chuỗi suy luận nhân-quả &amp; điều kiện đúng của chương</li><li>Luyện 3–5 bài lý thuyết (sắp xếp, bản chất, lập biểu thức)</li><li>Áp dụng thẳng sang bài tính toán hoặc bài tập PDF</li><li>Đối chiếu bẫy sai và lưu tiến độ ngay trên trình duyệt</li></ol>
+        <p>Bạn có thể mở ngay bất kỳ chương nào để ôn lý thuyết hoặc nhảy thẳng vào bài tập đang cần.</p>
+      </aside>
     </section>
-    <div class="toc" id="toc" aria-live="polite"></div>
+    <section id="chuong" aria-labelledby="catalog-title">
+      <div class="section-head"><h2 id="catalog-title">Chọn chương để học</h2><p id="overall" role="status"></p></div>
+      <div class="catalog-tools">
+        <div><label for="search">Tìm bài hoặc chủ đề</label><input class="input" type="search" id="search" placeholder="Ví dụ: 4.1, ma sát, định luật II, entropy" autocomplete="off"></div>
+        <div><label for="status">Nội dung hiển thị</label><select class="input" id="status"><option value="all">Tất cả 11 chương</option><option value="ready">Có bài tính toán</option><option value="todo">Bài chưa hoàn thành</option><option value="done">Bài đã hoàn thành</option></select></div>
+      </div>
+      <p class="hint">Cả 11 chương đều có mạch lý thuyết logic và bài tập lý thuyết (L1.1–L11.3). Chương 2–4 có thêm 31 bài tính toán tương tác (dấu * theo PDF).</p>
+      <p id="result-count" class="meta" role="status"></p>
+      <div class="toc" id="toc"></div>
+      <noscript><p>Hãy bật JavaScript để mở danh sách bài và lưu tiến độ. Bạn vẫn có thể đọc <a href="docs/pdf_slides_from_teacher/De%20cuong%20Co-Nhiet.pdf">đề cương PDF</a>.</p></noscript>
+    </section>
+    <section id="tai-lieu" class="resources" aria-labelledby="resources-title">
+      <h2 id="resources-title">Tài liệu và tiến độ học</h2>
+      <div class="resource-grid">
+        <div><h3>Tài liệu của giảng viên</h3><ul id="source-links"></ul><p class="hint">Bài giảng từng chương nằm trong mục lục phía trên. Chưa có slide chương 6 và 7 trong thư mục tài liệu.</p></div>
+        <div><h3>Sao lưu tiến độ</h3><p>Tiến độ lưu trên trình duyệt này. Tải bản sao để chuyển sang máy khác hoặc giữ lại trước khi xóa dữ liệu trình duyệt.</p><button class="btn ghost" type="button" id="export">Tải tiến độ</button><div class="backup-import"><label for="import">Khôi phục từ file tiến độ JSON</label><input type="file" accept=".json,application/json" id="import" class="input"></div><p id="backup-status" role="status"></p></div>
+      </div>
+    </section>
   </main>
   <footer class="site-foot">
     <p>Nguồn đề: "Bài tập Cơ – Nhiệt" (bắt buộc) và đề cương học phần PHY1159, Khoa Vật lý, Trường ĐH Khoa học Tự nhiên, ĐHQGHN. Tiến độ làm bài được lưu trong trình duyệt của bạn.</p>

@@ -173,6 +173,7 @@ const TEX_VAR = {
   alpha: '\\alpha', beta: '\\beta', gamma: '\\gamma', delta: '\\delta', theta: '\\theta',
   lambda: '\\lambda', mu: '\\mu', nu: '\\nu', rho: '\\rho', sigma: '\\sigma', tau: '\\tau',
   phi: '\\varphi', omega: '\\omega', eta: '\\eta', l: '\\ell', v: '\\upsilon', ap: "a'",
+  dT: '\\Delta T', Tf: 'T_F',
 };
 const TEX_FN = { tan: '\\mathrm{tg}\\,', tg: '\\mathrm{tg}\\,', cot: '\\cot', cotg: '\\cot', arctan: '\\mathrm{arctg}\\,', arctg: '\\mathrm{arctg}\\,', atan: '\\mathrm{arctg}\\,', ln: '\\ln', lg: '\\lg', log: '\\ln' };
 const PREC = { '+': 1, '-': 1, '*': 2, '/': 2, '^': 3 };

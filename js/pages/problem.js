@@ -1,9 +1,9 @@
-// Trang một bài tập: đề → dự đoán → hệ quy chiếu → sơ đồ lực → công thức → thay số → lời giải mẫu.
-import { PROBLEMS, CHAPTERS, byId, groupOf, GROUP_NAMES } from '../data/index.js';
+// Trang một bài tập: đề → cơ sở lý thuyết theo logic → dự đoán → hệ quy chiếu → sơ đồ lực → công thức → thay số → lời giải mẫu.
+import { PROBLEMS, CHAPTERS, SOURCES, byId, groupOf, GROUP_NAMES, findStage } from '../data/index.js';
 import { givenValues } from '../data/util.js';
-import { parse, toTex, ExprError } from '../core/expr.js';
-import { checkFormula, checkNumber, fmt } from '../core/grader.js';
+import { checkNumber, fmt } from '../core/grader.js';
 import { getProgress, markStep } from '../core/progress.js';
+import { mountChoice, mountFormula } from '../ui/exercises.js';
 import { rich, tex, esc } from '../ui/math.js';
 import { figureHTML } from '../ui/figures.js';
 import { mountFBD } from '../ui/fbd.js';
@@ -11,8 +11,6 @@ import { mount as mountArea21 } from '../sims/area21.js';
 import { mount as mountIncline } from '../sims/inclinePulley.js';
 
 const SIMS = { 'area-21': mountArea21, 'incline-pulley': mountIncline };
-const KEY_INSERT = { alpha: 'α', mu: 'μ', omega: 'ω', phi: 'φ', tau: 'τ', beta: 'β', l: 'l', v: 'v', ap: 'ap' };
-const KEY_SHOW = { alpha: 'α', mu: 'μ', omega: 'ω', phi: 'φ', tau: 'τ', beta: 'β', l: 'ℓ', v: 'υ', ap: "a'" };
 
 const app = document.getElementById('app');
 const id = new URLSearchParams(location.search).get('id');
@@ -26,8 +24,9 @@ if (!P) {
 
 function render() {
   const ch = CHAPTERS.find((c) => c.n === P.ch);
+  const stInfo = P.logic ? findStage(P.logic.theoryRef) : null;
   document.title = `Bài ${P.id}${P.star ? '*' : ''}: ${P.title} – Tiệm Cận`;
-  document.getElementById('crumbs').innerHTML = `<a href="./#ch${ch.n}">Chương ${ch.n}. ${esc(ch.title)}</a>`;
+  document.getElementById('crumbs').innerHTML = `<a href="./#ch${ch.n}">Chương ${ch.n}. ${esc(ch.title)}</a><span aria-hidden="true">/</span><a href="lythuyet.html?ch=${ch.n}">Lý thuyết</a>`;
 
   let values = givenValues(P);
   let practice = false;
@@ -48,14 +47,30 @@ function render() {
   app.innerHTML = `
     <header class="problem-head">
       <h1>${esc(P.title)}</h1>
-      <p class="meta">Bài ${P.id}${P.star ? '<span class="star">*</span>' : ''} trong file bài tập, trang ${P.page}. Chương ${ch.n} PHY1159: ${esc(ch.title)}.</p>
+      <p class="meta">Bài ${P.id}${P.star ? '<span class="star">*</span>' : ''} · Chương ${ch.n}: ${esc(ch.title)}.</p>
     </header>
     <div class="layout">
       <div class="col-lead">
         <blockquote class="statement">${rich(P.statement)}</blockquote>
-        <p class="source">Đề chép nguyên văn từ "Bài tập Cơ – Nhiệt" (bắt buộc), trang ${P.page}.</p>
+        <p class="source">${P.adapted ? 'Đề diễn đạt lại từ' : 'Đề chép từ'} <a href="${encodeURI(SOURCES.exercises)}#page=${P.page}" target="_blank" rel="noopener">Bài tập Cơ – Nhiệt, trang ${P.page}</a>.${ch.slide ? ` <a href="${encodeURI(ch.slide)}" target="_blank" rel="noopener">Đọc bài giảng chương ${ch.n}</a>.` : ''}</p>
         ${P.errata ? `<div class="notice errata"><strong>Đính chính đáp số trong PDF.</strong> ${rich(P.errata)}</div>` : ''}
-        ${P.sample ? `<div class="notice sample"><strong>Đề chỉ yêu cầu công thức.</strong> Số liệu ở bảng số liệu do web đặt để bạn luyện thay số; chúng không có trong đề gốc.</div>` : ''}
+        ${P.sample ? `<div class="notice sample"><strong>Bài có số liệu luyện tập tự chọn.</strong> Các giá trị không nêu trong đề được web đặt thêm để bạn luyện thay số.</div>` : ''}
+        ${P.logic ? `<section class="theory-bridge" aria-labelledby="bridge-h">
+          <div class="bridge-head">
+            <div>
+              <p class="eyebrow">Cơ sở lý thuyết &amp; Mạch suy luận logic</p>
+              <h2 id="bridge-h">${stInfo ? esc(stInfo.stage.title) : 'Nguyên tắc giải bài'}</h2>
+            </div>
+            <a class="resource-link" href="lythuyet.html?ch=${ch.n}#${P.logic.theoryRef}">Học ${esc(P.logic.theoryRef)} ↗</a>
+          </div>
+          <p class="bridge-principle"><strong>Nguyên lý cốt lõi:</strong> ${rich(P.logic.principle)}</p>
+          <p class="bridge-cond"><strong>Điều kiện áp dụng &amp; Bẫy sai:</strong> ${rich(P.logic.condition)}</p>
+          <details class="bridge-steps">
+            <summary>Mạch suy luận 3 bước cho bài này</summary>
+            <ol>${P.logic.steps.map((s) => `<li>${rich(s)}</li>`).join('')}</ol>
+          </details>
+          ${P.logic.check ? `<div class="bridge-check"><p class="eyebrow" style="margin-bottom:0.35rem">Kiểm tra nhanh theo logic</p><div id="logic-check-root"></div></div>` : ''}
+        </section>` : ''}
       </div>
       <aside class="bench" aria-label="Số liệu và mô phỏng">
         <div>
@@ -88,8 +103,8 @@ function render() {
   const renderGiven = () => {
     tbody.innerHTML = P.given.map((g) => `<tr><th scope="row">${esc(g.label)}</th><td>${tex(g.sym)} = ${fmt(values[g.key], 4)}${g.unit === '°' ? '°' : g.unit ? ` ${esc(g.unit)}` : ''}</td></tr>`).join('');
     const note = app.querySelector('.given-note');
-    note.hidden = !practice;
-    note.textContent = practice ? 'Đây là số liệu luyện tập do web đổi, không phải số liệu trong đề.' : '';
+    note.hidden = !practice && !P.sample;
+    note.textContent = practice ? 'Đây là số liệu luyện tập do web đổi, không phải số liệu trong đề. Kết quả luyện số mới không ghi đè tiến độ đề gốc.' : P.sample ? 'Bảng có số liệu tự chọn để luyện thay số. Xem đề phía bên để phân biệt dữ kiện gốc.' : '';
   };
   renderGiven();
 
@@ -133,17 +148,22 @@ function render() {
   };
   const attempt = (key, ok) => {
     attempted.add(key);
-    markStep(P.id, key, ok);
+    if (!(practice && key === 'number')) markStep(P.id, key, ok);
     refreshLocks();
   };
+
+  const logicRoot = document.getElementById('logic-check-root');
+  if (logicRoot && P.logic?.check) {
+    mountChoice(logicRoot, P.logic.check, (ok) => markStep(P.id, 'logic', ok), { allowRetry: true });
+  }
 
   for (const el of stepEls) {
     const body = el.querySelector('.step-body');
     const key = el.dataset.step;
-    if (key === 'predict') choiceQuestion(body, P.predict, (ok) => attempt('predict', ok));
-    if (key === 'frame') choiceQuestion(body, P.frame, (ok) => attempt('frame', ok));
+    if (key === 'predict') mountChoice(body, P.predict, (ok) => attempt('predict', ok));
+    if (key === 'frame') mountChoice(body, P.frame, (ok) => attempt('frame', ok));
     if (key === 'fbd') mountFBD(body, P.fbd, { onAttempt: (ok) => attempt('fbd', ok) });
-    if (key === 'formula') formulaStep(body, (ok) => attempt('formula', ok));
+    if (key === 'formula') mountFormula(body, P, (ok) => attempt('formula', ok));
     if (key === 'number') numberStep(body, (ok) => attempt('number', ok));
   }
 
@@ -218,93 +238,6 @@ function render() {
       <ol>${group.map((g) => `<li><a class="chip" href="bai.html?id=${g.id}" ${g === P ? 'aria-current="page" style="border-color:var(--pen)"' : ''}>${g.id}${g.star ? '<span class="star">*</span>' : ''}</a></li>`).join('')}</ol>` : '';
   }
 
-  // ----- Trắc nghiệm -----
-  function choiceQuestion(root, q, done) {
-    root.innerHTML = `<p class="lead">${rich(q.q)}</p><div class="options">${q.options.map((o, i) => `<button class="option" type="button" data-i="${i}" aria-pressed="false">${rich(o.text)}</button>`).join('')}</div><div class="fb" aria-live="polite"></div>`;
-    const btns = [...root.querySelectorAll('.option')];
-    btns.forEach((b) => b.addEventListener('click', () => {
-      const o = q.options[+b.dataset.i];
-      const right = q.options.find((x) => x.ok);
-      btns.forEach((x) => {
-        x.disabled = true;
-        const opt = q.options[+x.dataset.i];
-        if (opt.ok) x.classList.add('right');
-        else if (x === b) x.classList.add('wrong');
-      });
-      b.setAttribute('aria-pressed', 'true');
-      root.querySelector('.fb').innerHTML = o.ok
-        ? `<div class="feedback ok">${rich(o.why)}</div>`
-        : `<div class="feedback bad">${rich(o.why)}</div><div class="feedback info"><strong>Đáp án đúng:</strong> ${rich(right.text)}. ${rich(right.why)}</div>`;
-      done(o.ok);
-    }));
-  }
-
-  // ----- Lập công thức -----
-  function formulaStep(root, done) {
-    const targets = P.targets.filter((t) => t.expr);
-    const keys = [...Object.keys(P.vars)];
-    root.innerHTML = `
-      <p class="lead">Viết biểu thức chữ theo các đại lượng của đề. Web thử biểu thức của bạn với nhiều bộ số, nên mọi cách viết tương đương đều được chấp nhận.</p>
-      <p class="hint">Gõ được: <code>m1</code>, <code>sin(α)</code>, <code>tg α</code>, <code>sqrt(...)</code>, <code>x^2</code>, phép nhân có thể bỏ dấu (<code>2g</code>). Số thập phân dùng dấu chấm.${P.hint ? ` ${esc(P.hint)}` : ''}</p>
-      ${targets.map((t, i) => `
-        <div class="field" data-t="${t.key}">
-          <label for="f-${i}">${tex(t.sym)} = <span class="unit">${esc(t.label)}</span></label>
-          <div class="input-row">
-            <input class="input" id="f-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text">
-            <button class="btn" type="button" data-check>Kiểm tra</button>
-          </div>
-          <div class="preview" aria-live="polite"></div>
-          <div class="keys" aria-label="Chèn ký hiệu">
-            ${keys.map((k) => `<button class="key" type="button" data-ins="${KEY_INSERT[k] ?? k}">${esc(KEY_SHOW[k] ?? k)}</button>`).join('')}
-            ${['sin(', 'cos(', 'tg(', 'sqrt(', '^', '(', ')'].map((k) => `<button class="key" type="button" data-ins="${k}">${k === 'sqrt(' ? '√' : esc(k)}</button>`).join('')}
-          </div>
-          <div class="fb" aria-live="polite"></div>
-        </div>`).join('')}
-    `;
-    const solved = new Set();
-    root.querySelectorAll('.field').forEach((field) => {
-      const t = targets.find((x) => x.key === field.dataset.t);
-      const input = field.querySelector('input');
-      const preview = field.querySelector('.preview');
-      let wrong = 0;
-      const show = () => {
-        if (!input.value.trim()) { preview.innerHTML = ''; return; }
-        try {
-          preview.innerHTML = `<span class="label">Web đọc là</span>${tex(toTex(parse(input.value)))}`;
-        } catch (e) {
-          preview.innerHTML = e instanceof ExprError ? `<span class="label">Chưa đọc được:</span>${esc(e.message)}` : '';
-        }
-      };
-      input.addEventListener('input', show);
-      field.querySelectorAll('[data-ins]').forEach((k) => k.addEventListener('click', () => {
-        const ins = k.dataset.ins;
-        const s = input.selectionStart ?? input.value.length;
-        const e2 = input.selectionEnd ?? s;
-        input.value = input.value.slice(0, s) + ins + input.value.slice(e2);
-        input.focus();
-        input.setSelectionRange(s + ins.length, s + ins.length);
-        show();
-      }));
-      const check = () => {
-        const r = checkFormula(input.value, t.expr, P.vars);
-        const fb = field.querySelector('.fb');
-        if (r.ok) {
-          solved.add(t.key);
-          fb.innerHTML = `<div class="feedback ok">${esc(r.message)}${t.pdfExpr ? ` Dạng in trong đáp số: ${tex(t.pdfExpr)}` : ''}</div>`;
-        } else {
-          wrong++;
-          fb.innerHTML = `<div class="feedback bad">${esc(r.message)}</div>${wrong >= 2 ? `<button class="btn quiet" type="button" data-reveal>Xem công thức đáp án</button>` : ''}`;
-          fb.querySelector('[data-reveal]')?.addEventListener('click', () => {
-            fb.insertAdjacentHTML('beforeend', `<div class="feedback info">${tex(`${t.sym} = ${t.pdfExpr ? t.pdfExpr.replace(/^[^=]*=\s*/, '') : toTex(parse(t.expr))}`, true)}</div>`);
-          }, { once: true });
-        }
-        done(solved.size === targets.length);
-      };
-      field.querySelector('[data-check]').addEventListener('click', check);
-      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
-    });
-  }
-
   // ----- Thay số -----
   function numberStep(root, done) {
     const out = P.model(values);
@@ -326,6 +259,7 @@ function render() {
       const target = out[t.key];
       const input = field.querySelector('input');
       let wrong = 0;
+      input.addEventListener('input', () => { solved.delete(t.key); field.querySelector('.fb').innerHTML = ''; });
       const check = () => {
         const r = checkNumber(input.value, target);
         const fb = field.querySelector('.fb');
@@ -334,6 +268,7 @@ function render() {
           const pdfNote = !practice && t.pdfNote ? ` ${t.pdfNote}` : '';
           fb.innerHTML = `<div class="feedback ok">Đúng. Giá trị chính xác hơn: ${fmt(target, 4)}${t.unit ? ` ${esc(t.unit)}` : ''}.${esc(pdfNote)}</div>`;
         } else {
+          solved.delete(t.key);
           wrong++;
           fb.innerHTML = `<div class="feedback bad">${esc(r.message)}</div>${wrong >= 2 ? `<button class="btn quiet" type="button" data-reveal>Xem đáp số</button>` : ''}`;
           fb.querySelector('[data-reveal]')?.addEventListener('click', () => {

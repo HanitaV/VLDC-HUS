@@ -24,7 +24,7 @@ export function areaUnder(points, tEnd) {
 
 export default [
   {
-    id: '2.1', star: false, ch: 1, oldCh: 2, page: 1,
+    id: '2.1', star: false, ch: 2, oldCh: 2, page: 1,
     title: 'Quãng đường từ đồ thị vận tốc',
     group: 'do-thi', fade: 0,
     statement: t`Một người chạy đua với vận tốc thay đổi theo thời gian được minh họa bằng đồ thị trên hình vẽ. Hỏi người đó chạy được quãng đường là bao nhiêu trong 16 s.`,
@@ -48,7 +48,7 @@ export default [
     ],
   },
   {
-    id: '2.2', star: true, ch: 1, oldCh: 2, page: 1,
+    id: '2.2', star: true, ch: 2, oldCh: 2, page: 1,
     title: 'Đồ thị vận tốc dạng nửa ellipse',
     group: 'do-thi', fade: 1,
     statement: t`Đồ thị phụ thuộc vận tốc của vật vào thời gian có dạng nửa ellipse như hình vẽ. Vận tốc cực đại của vật là $\upsilon_0$, thời gian chuyển động là $t_0$. Hãy xác định quãng đường mà vật đi được trong thời gian đó.`,
@@ -68,7 +68,7 @@ export default [
     ],
   },
   {
-    id: '2.3', star: false, ch: 1, oldCh: 2, page: 1,
+    id: '2.3', star: false, ch: 2, oldCh: 2, page: 1,
     title: 'Toa tàu thứ n đi qua người quan sát',
     group: 'bien-doi-deu', fade: 0,
     statement: t`Một người quan sát đứng ngang với đầu tầu hoả lúc nó bắt đầu chuyển động và nhận thấy toa đầu tiên chạy ngang qua mình mất một khoảng thời gian $\tau = 4$ s. Hỏi toa tầu thứ $n = 7$ chạy ngang qua người đó trong khoảng thời gian là bao nhiêu lâu? Biết rằng chuyển động của tầu là nhanh dần đều, độ dài của các toa là như nhau và bỏ qua độ dài chỗ nối giữa các toa.`,
@@ -95,7 +95,7 @@ export default [
     ],
   },
   {
-    id: '2.4', star: true, ch: 1, oldCh: 2, page: 1,
+    id: '2.4', star: true, ch: 2, oldCh: 2, page: 1,
     title: 'Vật ném thẳng đứng qua độ cao h hai lần',
     group: 'bien-doi-deu', fade: 1,
     statement: t`Một vật được ném lên trên theo phương thẳng đứng. Người quan sát thấy vật đó đi qua vị trí có độ cao $h$ hai lần và khoảng thời gian giữa hai lần đó là $t_0$. Tìm vận tốc ban đầu và thời gian chuyển động của vật từ lúc ném đến khi vật rơi về vị trí ban đầu.`,
@@ -121,7 +121,7 @@ export default [
     ],
   },
   {
-    id: '2.5', star: true, ch: 1, oldCh: 2, page: 1,
+    id: '2.5', star: true, ch: 2, oldCh: 2, page: 1,
     title: 'Khoảng cách giữa hai vật ném cùng lúc',
     group: 'nem', fade: 0,
     statement: t`Hai vật được ném đi đồng thời từ cùng một điểm. Vật thứ nhất được ném thẳng đứng lên trên với vận tốc $\upsilon_0 = 25$ m/s, vật thứ hai được ném với cùng vận tốc ban đầu $\upsilon_0$ và tạo với phương ngang góc $\alpha = 60^\circ$. Xác định khoảng cách giữa hai vật sau thời gian $t = 1{,}7$ s.`,
@@ -149,7 +149,7 @@ export default [
     ],
   },
   {
-    id: '2.6', star: true, ch: 1, oldCh: 2, page: 1,
+    id: '2.6', star: true, ch: 2, oldCh: 2, page: 1,
     title: 'Bán kính cong của quỹ đạo ném xiên',
     group: 'nem', fade: 1,
     statement: t`Một hòn đá được ném với vận tốc ban đầu $\upsilon_0 = 20$ m/s theo phương hợp với phương nằm ngang góc $\alpha = 60^\circ$. Xác định bán kính cong $R$ của quỹ đạo hòn đá tại điểm cao nhất và tại điểm nó rơi xuống mặt đất. Bỏ qua sức cản của không khí.`,
@@ -174,7 +174,7 @@ export default [
     ],
   },
   {
-    id: '2.7', star: false, ch: 1, oldCh: 2, page: 2,
+    id: '2.7', star: false, ch: 2, oldCh: 2, page: 2,
     title: 'Vận tốc gió trong hệ quy chiếu gắn với tàu',
     group: 'cong-van-toc', fade: 0,
     statement: t`Một con tầu chuyển động dọc theo xích đạo về hướng Đông với vận tốc $\upsilon_0 = 30$ km/h. Trong lúc đó có một luồng gió với vận tốc $\upsilon = 15$ km/h thổi đến từ hướng Đông Nam và hợp với phương xích đạo một góc $\varphi = 60^\circ$. Hãy xác định vận tốc $\upsilon'$ của luồng gió so với tầu và $\varphi'$ – góc giữa hướng gió và xích đạo trong hệ quy chiếu gắn với con tầu.`,

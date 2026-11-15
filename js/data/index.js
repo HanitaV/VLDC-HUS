@@ -1,24 +1,16 @@
 // Danh mục chương PHY1159 và toàn bộ bài tập đã nhập.
 import ch2 from './ch2.js';
 import ch3 from './ch3.js';
+import ch4 from './ch4.js';
+import { PROBLEM_LOGIC } from './problemLogic.js';
+export { CHAPTERS, SOURCES } from './sources.js';
+export { THEORY_CHAPTERS, THEORY_EXERCISES, theoryChapter, theoryExById, theoryForChapter, findStage } from './theory/index.js';
 
-/** 9 chương của đề cương PHY1159, ánh xạ sang chương trong file bài tập (đề cương cũ). */
-export const CHAPTERS = [
-  { n: 1, title: 'Động học chất điểm', old: '2', note: '' },
-  { n: 2, title: 'Động lực học chất điểm', old: '3', note: '' },
-  { n: 3, title: 'Công và năng lượng', old: '4', note: '' },
-  { n: 4, title: 'Chuyển động của vật rắn', old: '5', note: '' },
-  { n: 5, title: 'Trường hấp dẫn', old: '6', note: 'Tự học' },
-  { n: 6, title: 'Nguyên lý số không và nguyên lý I nhiệt động lực học', old: '9', note: '' },
-  { n: 7, title: 'Thuyết động học chất khí', old: '10', note: '' },
-  { n: 8, title: 'Các hiện tượng động học của chất khí', old: '', note: 'Chưa có bài tập trong file' },
-  { n: 9, title: 'Entropi và nguyên lý II nhiệt động lực học', old: '11', note: '' },
-];
+export const PLANNED = { 2: 7, 3: 14, 4: 10, 5: 8, 6: 4, 9: 6, 10: 7, 11: 9 };
 
-/** Số bài trong file bài tập theo chương cũ, để hiển thị phần chưa nhập. */
-export const PLANNED = { 1: 7, 2: 14, 3: 10, 4: 8, 5: 4, 6: 6, 7: 7, 8: 0, 9: 9 };
-
-export const PROBLEMS = [...ch2, ...ch3];
+export const PROBLEMS = [...ch2, ...ch3, ...ch4].map((p) => (
+  PROBLEM_LOGIC[p.id] ? { ...p, logic: p.logic || PROBLEM_LOGIC[p.id] } : p
+));
 
 export const byId = (id) => PROBLEMS.find((p) => p.id === id);
 
@@ -28,6 +20,9 @@ export function groupOf(problem) {
 }
 
 export const GROUP_NAMES = {
+  'cong-ma-sat': 'Công và ma sát',
+  'bao-toan-co-nang': 'Bảo toàn cơ năng',
+  'va-cham': 'Động lượng và va chạm',
   'do-thi': 'Đọc đồ thị vận tốc',
   'bien-doi-deu': 'Chuyển động biến đổi đều',
   nem: 'Chuyển động ném',
