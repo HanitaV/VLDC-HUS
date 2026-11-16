@@ -17,7 +17,7 @@ export const THERMO_CHAPTERS = [
         title: 'Biến đổi Lorentz, dãn thời gian và co độ dài',
         origin: 'Đòi hỏi tọa độ sáng $x^2 - c^2 t^2 = x\'^2 - c^2 t\'^2$ bất biến dẫn tới phép biến đổi Lorentz với hệ số $\\gamma = \\frac{1}{\\sqrt{1 - \\upsilon^2/c^2}} \\ge 1$.',
         law: 'Nếu hai biến cố xảy ra tại cùng một vị trí trong hệ gắn với vật (khoảng thời gian riêng $\\Delta t_0$), thì trong hệ quy chiếu khác đang chuyển động tương đối với tốc độ $\\upsilon$, khoảng thời gian đo được dãn ra thành $\\Delta t = \\gamma\\,\\Delta t_0$. Ngược lại, chiều dài dọc phương chuyển động co ngắn: $l = l_0/\\gamma$ (với $l_0$ là chiều dài riêng đo trong hệ mà vật đứng yên).',
-        trap: 'Sai lầm phổ biến nhất là gán nhầm $\\Delta t_0$ cho người đứng ở mặt đất. Khoảng thời gian riêng $\\Delta t_0$ là khoảng thời gian ngắn nhất, luôn do đồng hồ gắn với vật (hai biến cố tại CÙNG MỘT ĐIỂM) đo được; còn chiều dài riêng $l_0$ là chiều dài lớn nhất, đo trong hệ mà thước ĐỨNG YÊN.',
+        trap: 'Sai lầm phổ biến nhất là gán nhầm $\\Delta t_0$ cho người đứng ở mặt đất. Khoảng thời gian riêng $\\Delta t_0$ là khoảng thời gian ngắn nhất, luôn do đồng hồ gắn với vật (hai biến cố tại cùng một điểm) đo được; còn chiều dài riêng $l_0$ là chiều dài lớn nhất, đo trong hệ mà thước đứng yên.',
         consequence: 'Hai sự kiện đồng thời ở hai nơi khác nhau trong hệ này có thể xảy ra lệch thời gian trong hệ khác.',
       },
       {
@@ -47,7 +47,7 @@ export const THERMO_CHAPTERS = [
         title: 'Các thang nhiệt giai và quy tắc nội suy tuyến tính',
         origin: 'Mỗi thang nhiệt giai chọn hai điểm chuẩn cố định (điểm ba/đóng băng và điểm sôi chuẩn của nước) rồi chia khoảng giữa thành số độ đều nhau.',
         law: 'Từ tỉ lệ tuyến tính $\\frac{y - y_1}{x - x_1} = \\frac{y_2 - y_1}{x_2 - x_1}$, với Celsius $(0;\\,100)$, Kelvin $(273;\\,373)$ và Fahrenheit $(32;\\,212)$ suy ra $T_C = T - 273$ và $T_F = \\tfrac95 T_C + 32$.',
-        trap: 'Phân biệt GIÁ TRỊ nhiệt độ với ĐỘ BIẾN THIÊN nhiệt độ: $20^\\circ\\text{C}$ ứng với $293\\text{ K}$, nhưng "tăng thêm $20^\\circ\\text{C}$" chính xác là $\\Delta T = 20\\text{ K}$ (vì độ lớn 1 độ chia trên thang C và thang K bằng nhau), còn trên thang F là $\\Delta T_F = \\tfrac95\\cdot 20 = 36^\\circ\\text{F}$.',
+        trap: 'Cần phân biệt giá trị nhiệt độ với độ biến thiên nhiệt độ: $20^\\circ\\text{C}$ ứng với $293\\text{ K}$, nhưng "tăng thêm $20^\\circ\\text{C}$" chính xác là $\\Delta T = 20\\text{ K}$ (vì độ lớn 1 độ chia trên thang C và thang K bằng nhau), còn trên thang F là $\\Delta T_F = \\tfrac95\\cdot 20 = 36^\\circ\\text{F}$.',
         consequence: 'Trong mọi công thức vật lý chứa hiệu $\\Delta T$ (như $mc\\Delta T$, $\\alpha L\\Delta T$) có thể thay $\\Delta T$ bằng $^\\circ\\text{C}$ hay $\\text{K}$ như nhau, nhưng công thức chứa $T$ tuyệt đối (như $pV=nRT$, Carnot) bắt buộc dùng Kelvin.',
       },
       {
@@ -55,7 +55,7 @@ export const THERMO_CHAPTERS = [
         title: 'Sự nở vì nhiệt của chất rắn và chất lỏng',
         origin: 'Khi nhiệt độ tăng, biên độ dao động nhiệt quanh vị trí cân bằng tăng làm khoảng cách trung bình giữa các nguyên tử tăng lên.',
         law: 'Với vật rắn đẳng hướng: nở dài $\\Delta L = \\alpha L\\Delta T$, nở khối $\\Delta V = \\beta V\\Delta T$. Xét khối hộp thể tích $V_0 = L_1 L_2 L_3$, khi tăng $\\Delta T$: $V = V_0(1+\\alpha\\Delta T)^3 \\approx V_0(1+3\\alpha\\Delta T)$ do $\\alpha\\Delta T \\ll 1$, suy ra $\\beta \\approx 3\\alpha$.',
-        trap: 'Khi nung nóng một tấm kim loại có khoét lỗ tròn ở giữa, lỗ tròn NỞ TO RA chứ không co lại, vì mọi khoảng cách giữa hai điểm bất kỳ trên vật đều tăng theo cùng hệ số $1 + \\alpha\\Delta T$.',
+        trap: 'Khi nung nóng một tấm kim loại có khoét lỗ tròn ở giữa, lỗ tròn sẽ nở to ra chứ không co lại, vì mọi khoảng cách giữa hai điểm bất kỳ trên vật đều tăng theo cùng hệ số $1 + \\alpha\\Delta T$.',
         consequence: 'Thứ nguyên của cả $\\alpha$ và $\\beta$ đều là $\\text{K}^{-1}$ (hoặc $^\\circ\\text{C}^{-1}$), không phụ thuộc đơn vị độ dài.',
       },
     ],
@@ -69,7 +69,7 @@ export const THERMO_CHAPTERS = [
         title: 'Nội năng (hàm trạng thái) và Nhiệt, Công (hàm quá trình)',
         origin: 'Khí trong xi-lanh chuyển từ trạng thái 1 sang trạng thái 2 theo nhiều đường khác nhau trên giản đồ $pV$. Công hệ sinh ra là $A = \\int_1^2 p\\,dV$ (diện tích dưới đường biểu diễn), còn nhiệt $Q$ cũng phụ thuộc đường đi.',
         law: 'Theo quy ước của giáo trình: $Q > 0$ khi hệ nhận nhiệt, $A > 0$ khi hệ dãn nở sinh công ($dV > 0$). Nhiệt $Q$ và công $A$ là hàm quá trình (chỉ xuất hiện khi có biến đổi), còn nội năng $U$ là tổng động năng và thế năng chuyển động nhiệt vi mô — một hàm đơn giá của trạng thái.',
-        trap: 'Nhiều sách dùng $\\Delta U = Q + A$ với $A$ là công hệ NHẬN; slide và bài tập học phần PHY1159 dùng $\\Delta U = Q - A$ với $A = \\int p\\,dV$ là công hệ SINH RA. Phải giữ nhất quán một quy ước để không sai dấu.',
+        trap: 'Nhiều sách dùng $\\Delta U = Q + A$ với $A$ là công hệ nhận; slide và bài tập học phần PHY1159 dùng $\\Delta U = Q - A$ với $A = \\int p\\,dV$ là công hệ sinh ra. Cần giữ nhất quán một quy ước để tránh sai dấu.',
         consequence: 'Nếu hai quá trình nối cùng điểm đầu 1 và điểm cuối 2 trên giản đồ $pV$, chúng có $\\Delta U$ bằng nhau dù $A$ và $Q$ khác nhau.',
         pdfRefs: [
           { label: 'Bài 9.3–9.5 (tr. 10–11 PDF): Tính công, nội năng theo giản đồ pV', page: 10, note: 'Tính công từ diện tích dưới đồ thị $pV$ và dùng chung $\\Delta U$ cho mọi đường cùng đầu–cuối.' },
@@ -79,7 +79,7 @@ export const THERMO_CHAPTERS = [
         id: 'T9.2',
         title: 'Nguyên lý I Nhiệt động lực học và các quá trình đặc biệt',
         origin: 'Thực nghiệm chứng minh dù $Q$ và $A$ thay đổi theo đường đi giữa hai trạng thái cho trước, hiệu $Q - A$ luôn giữ cùng một giá trị.',
-        law: 'Nguyên lý I: $\\Delta U = Q - A$ (dạng vi phân $dU = \\delta Q - \\delta A$). Đẳng tích ($dV=0 \\Rightarrow A=0$): $\\Delta U = Q$. Đoạn nhiệt ($Q=0$): $\\Delta U = -A$. Chu trình kín ($\\Delta U = 0$): $Q = A$ — không thể chế tạo động cơ vĩnh cửu loại I sinh công mà không nhận năng lượng.',
+        law: 'Nguyên lý I: $\\Delta U = Q - A$ (dạng vi phân $dU = \\delta Q - \\delta A$). Đẳng tích ($dV=0 \\Rightarrow A=0$): $\\Delta U = Q$. Đoạn nhiệt ($Q=0$): $\\Delta U = -A$. Chu trình kín ($\\Delta U = 0$): $Q = A$; do đó không thể chế tạo động cơ vĩnh cửu loại I tự sinh công mà không nhận năng lượng.',
         trap: 'Quá trình dãn nở tự do của khí cách nhiệt vào chân không có $Q = 0$ và $A = 0$ (không đẩy lực cản nào), nên $\\Delta U = 0$; tuy nhiên các trạng thái trung gian không cân bằng nên không vẽ thành đường cong liên tục trên giản đồ $pV$.',
         consequence: 'Với chu trình thuận chiều kim đồng hồ trên $pV$, công $A_{\\text{ck}} > 0$ nên $Q_{\\text{ck}} = A_{\\text{ck}} > 0$ (hệ nhận nhiệt ròng để sinh công).',
         pdfRefs: [
@@ -92,7 +92,7 @@ export const THERMO_CHAPTERS = [
         origin: 'Khi nhận nhiệt, vật có thể tăng nhiệt độ ($Q = mc\\Delta T$) hoặc chuyển pha đẳng nhiệt ($Q = mL$). Khi có chênh lệch nhiệt độ qua tường nhiều lớp, nhiệt truyền từ nóng sang lạnh.',
         law: 'Tại trạng thái dừng (nhiệt độ mỗi lớp không đổi theo thời gian), thông lượng nhiệt qua mọi lớp nối tiếp phải bằng nhau: $H = k_i A \\frac{\\Delta T_i}{L_i} = \\text{const}$.',
         trap: 'Trong bài pha trộn đá – nước hoặc cấp nhiệt hữu hạn $Q$, phải tính mốc nhiệt cần để đá tăng lên $0^\\circ\\text{C}$ và mốc nóng chảy hoàn toàn trước; nếu $Q$ thiếu thì hỗn hợp dừng ở $0^\\circ\\text{C}$ gồm cả nước và đá.',
-        consequence: 'Với tường nhiều lớp nối tiếp ở trạng thái dừng, độ sụt nhiệt độ trên mỗi lớp tỉ lệ với "nhiệt trở" $L_i/k_i$ của lớp đó.',
+        consequence: 'Với tường nhiều lớp nối tiếp ở trạng thái dừng, độ sụt nhiệt độ trên mỗi lớp tỉ lệ với nhiệt trở $L_i/k_i$ của lớp đó.',
         pdfRefs: [
           { label: 'Bài 9.1–9.2 (tr. 9–10 PDF): Nóng chảy đá và tường dẫn nhiệt 4 lớp', page: 9, note: 'Kiểm tra ngưỡng $0^\\circ\\text{C}$ ở bài 9.1 và cân bằng thông lượng $k_i\\Delta T_i/L_i$ ở bài 9.2.' },
         ],
@@ -108,7 +108,7 @@ export const THERMO_CHAPTERS = [
         title: 'Phương trình cơ bản thuyết động học và quãng đường tự do trung bình',
         origin: 'Xét $N$ phân tử khí lý tưởng va chạm đàn hồi lên thành bình lập phương cạnh $L$: mỗi lần va chạm vào mặt vuông góc $Ox$ truyền xung lượng $2m\\upsilon_{ix}$ trong chu kỳ $2L/\\upsilon_{ix}$.',
         law: 'Cộng lực của $N$ phân tử (với $\\overline{\\upsilon_x^2} = \\tfrac13\\overline{\\upsilon^2}$) cho phương trình cơ bản $p = \\frac{n\\mu}{3V}\\upsilon_{rms}^2$. Kết hợp $pV = nRT$ thu được $T = \\frac{\\mu}{3R}\\upsilon_{rms}^2$ và động năng tịnh tiến trung bình $\\overline{E_đ} = \\frac32 kT$ — nhiệt độ tuyệt đối là thước đo động năng tịnh tiến trung bình. Giữa hai lần va chạm, phân tử đi quãng đường tự do trung bình $\\lambda = \\frac{1}{\\sqrt{2}n_0\\pi d^2} = \\frac{kT}{\\sqrt{2}p\\pi d^2}$.',
-        trap: 'Ở cùng một nhiệt độ $T$, mọi khí lý tưởng đều có CÙNG động năng tịnh tiến trung bình $\\tfrac32 kT$, nhưng khí nhẹ hơn (khối lượng mol $\\mu$ nhỏ) có $\\upsilon_{rms} = \\sqrt{3RT/\\mu}$ LỚN hơn.',
+        trap: 'Ở cùng một nhiệt độ $T$, mọi khí lý tưởng đều có cùng động năng tịnh tiến trung bình $\\tfrac32 kT$, nhưng khí nhẹ hơn (khối lượng mol $\\mu$ nhỏ) có $\\upsilon_{rms} = \\sqrt{3RT/\\mu}$ lớn hơn.',
         consequence: 'Nếu giữ nguyên nhiệt độ mà giảm áp suất $p$ thì mật độ phân tử $n_0$ giảm nên $\\lambda$ tăng tỉ lệ nghịch với $p$.',
         pdfRefs: [
           { label: 'Bài 10.1 & 10.7 (tr. 11–12 PDF): Trạng thái khí và quãng đường tự do TB', page: 11, note: 'Dùng $p_1 V_1 / T_1 = p_2 V_2 / T_2$ (nhiệt độ Kelvin) và tỉ lệ $\\lambda \\propto T/(p d^2)$.' },
@@ -119,15 +119,15 @@ export const THERMO_CHAPTERS = [
         title: 'Phân bố đều theo bậc tự do và nội năng khí lý tưởng',
         origin: 'Phân tử không chỉ tịnh tiến mà còn có thể quay nếu gồm nhiều nguyên tử (tại nhiệt độ phòng chưa kích thích dao động).',
         law: 'Định luật phân bố đều: mỗi bậc tự do nhận năng lượng trung bình $\\tfrac12 kT$. Với đơn nguyên tử ($i=3$), lưỡng nguyên tử ($i=5$), đa nguyên tử ($i=6$), nội năng của $n$ mol khí lý tưởng là $U = n\\frac{i}{2}RT$.',
-        trap: 'Nội năng của khí lý tưởng chỉ phụ thuộc vào nhiệt độ $T$ (và $n, i$), KHÔNG phụ thuộc thể tích hay áp suất — nên mọi quá trình đẳng nhiệt của khí lý tưởng đều có $\\Delta U = 0$ và $Q = A$.',
-        consequence: 'Từ $U(T)$ suy thẳng ra công thức $\\Delta U = n C_V \\Delta T$ áp dụng được cho MỌI quá trình của khí lý tưởng, không riêng quá trình đẳng tích.',
+        trap: 'Nội năng của khí lý tưởng chỉ phụ thuộc vào nhiệt độ $T$ (và $n, i$), không phụ thuộc thể tích hay áp suất — nên mọi quá trình đẳng nhiệt của khí lý tưởng đều có $\\Delta U = 0$ và $Q = A$.',
+        consequence: 'Từ $U(T)$ suy thẳng ra công thức $\\Delta U = n C_V \\Delta T$ áp dụng được cho mọi quá trình của khí lý tưởng, không riêng quá trình đẳng tích.',
       },
       {
         id: 'T10.3',
         title: 'Nhiệt dung mol, hệ thức Mayer và đẳng nhiệt – đoạn nhiệt',
         origin: 'So sánh nhiệt lượng cần cấp để tăng $n$ mol khí thêm $\\Delta T$ trong quá trình đẳng tích (không sinh công) và đẳng áp (vừa tăng nội năng vừa sinh công $A = p\\Delta V = nR\\Delta T$).',
         law: 'Đẳng tích: $Q = \\Delta U \\Rightarrow C_V = \\frac{i}{2}R$. Đẳng áp: $n C_P \\Delta T = n C_V \\Delta T + nR\\Delta T \\Rightarrow C_P - C_V = R$ (hệ thức Mayer), và tỉ số $\\gamma = C_P/C_V = \\frac{i+2}{i}$. Với quá trình đẳng nhiệt $A = nRT\\ln(V_2/V_1)$; với quá trình đoạn nhiệt ($Q=0$) kết hợp $dU = -p\\,dV$ và $pV = nRT$ cho $pV^\\gamma = \\text{const}$ và công $A = \\frac{nR}{\\gamma - 1}(T_1 - T_2)$.',
-        trap: 'Từ cùng trạng thái $(p_1, V_1)$ dãn đến cùng $V_2 > V_1$, quá trình đoạn nhiệt sinh công ÍT HƠN quá trình đẳng nhiệt vì khí tự tiêu nội năng để sinh công nên nhiệt độ $T$ và áp suất giảm nhanh hơn ($\\gamma > 1$).',
+        trap: 'Từ cùng trạng thái $(p_1, V_1)$ dãn đến cùng $V_2 > V_1$, quá trình đoạn nhiệt sinh công ít hơn quá trình đẳng nhiệt vì khí tự tiêu nội năng để sinh công nên nhiệt độ $T$ và áp suất giảm nhanh hơn ($\\gamma > 1$).',
         consequence: 'Trên giản đồ $pV$, đường đoạn nhiệt luôn dốc hơn đường đẳng nhiệt đi qua cùng điểm.',
         pdfRefs: [
           { label: 'Bài 10.2–10.6 (tr. 11–12 PDF): Đẳng nhiệt, đẳng áp và tính $C_P, C_V$', page: 11, note: 'Phân biệt $A = nRT\\ln(V_2/V_1)$ (đẳng nhiệt) với $A = nR\\Delta T$ (đẳng áp).' },
@@ -144,7 +144,7 @@ export const THERMO_CHAPTERS = [
         title: 'Quá trình thuận nghịch và Nguyên lý II (Thomson – Clausius)',
         origin: 'Nguyên lý I cho phép mọi quá trình bảo toàn năng lượng, nhưng thực tế nhiệt chỉ tự truyền từ nóng sang lạnh và ma sát chỉ biến công thành nhiệt chứ không tự ngược lại.',
         law: 'Hai cách phát biểu tương đương của Nguyên lý II: (1) Thomson: không thể biến hoàn toàn nhiệt thành công mà không gây biến đổi nào khác ở môi trường — không tồn tại động cơ vĩnh cửu loại II, hiệu suất động cơ nhiệt $\\eta = \\frac{A}{Q_1} = 1 - \\frac{Q_2}{Q_1} < 1$; (2) Clausius: nhiệt không thể tự truyền từ vật lạnh sang vật nóng nếu không tốn công — máy lạnh có hệ số làm lạnh $k = \\frac{Q_2}{A} = \\frac{Q_2}{Q_1 - Q_2}$.',
-        trap: 'Đừng nhầm $k$ (hệ số làm lạnh, có thể lớn hơn $1$) với $\\eta$ (hiệu suất động cơ nhiệt, luôn nhỏ hơn $1$). Và ở bài chu trình tùy ý, $Q_1$ là tổng nhiệt HẤP THỤ trên các đoạn nhận nhiệt ($Q>0$), không phải nhiệt ròng $Q_1 - Q_2$.',
+        trap: 'Đừng nhầm $k$ (hệ số làm lạnh, có thể lớn hơn $1$) với $\\eta$ (hiệu suất động cơ nhiệt, luôn nhỏ hơn $1$). Ở bài chu trình tùy ý, $Q_1$ là tổng nhiệt hấp thụ trên các đoạn nhận nhiệt ($Q>0$), không phải nhiệt ròng $Q_1 - Q_2$.',
         consequence: 'Để tính hiệu suất bất kỳ chu trình nào, phải phân tích từng đoạn xem đoạn nào $Q > 0$ (cộng vào $Q_1$) và đoạn nào $Q < 0$ (tỏa $Q_2$).',
         pdfRefs: [
           { label: 'Bài 11.1–11.4 (tr. 12 PDF): Tủ lạnh, chu trình nhiệt và động cơ Stirling', page: 12, note: 'Xác định rõ các đoạn $Q>0$ để chia đúng cho $Q_1$ khi tính $\\eta = A/Q_1$.' },
@@ -165,8 +165,8 @@ export const THERMO_CHAPTERS = [
         id: 'T11.3',
         title: 'Bất đẳng thức Clausius, Entropi và nguyên lý tăng Entropi',
         origin: 'Từ $\\frac{Q_1 - |Q_2|}{Q_1} \\le \\frac{T_1 - T_2}{T_1}$, quy ước nhiệt nhận dương và tỏa âm cho $\\frac{Q_1}{T_1} + \\frac{Q_2}{T_2} \\le 0$. Chia nhỏ chu trình bất kỳ thành vô số chu trình Carnot sơ cấp cho bất đẳng thức Clausius $\\oint \\frac{\\delta Q}{T} \\le 0$.',
-        law: 'Với quá trình thuận nghịch, $\\oint \\frac{\\delta Q}{T} = 0$, nên tích phân $\\Delta S = S_2 - S_1 = \\int_1^2 \\left(\\frac{\\delta Q}{T}\\right)_{tn}$ không phụ thuộc đường đi: $S$ là một HÀM TRẠNG THÁI gọi là Entropi (đơn vị J/K). Với quá trình bất kỳ: $\\Delta S \\ge \\int_1^2 \\frac{\\delta Q}{T}$. Riêng hệ cô lập ($\\delta Q = 0$): $\\Delta S \\ge 0$ — Entropi tăng trong mọi quá trình thực tế, chỉ hướng thời gian và đạt cực đại ở cân bằng ($S = k\\ln W$).',
-        trap: 'Để tính $\\Delta S$ của một quá trình BẤT THUẬN NGHỊCH (như dãn nở tự do vào chân không hay trộn nước nóng–lạnh), KHÔNG lấy $\\int \\delta Q/T$ dọc theo quá trình thực tế (nhiều khi $\\delta Q=0$ lại tưởng $\\Delta S=0$!); vì $S$ là hàm trạng thái, phải thay bằng một quá trình THUẬN NGHỊCH tưởng tượng nối cùng hai trạng thái đầu–cuối rồi tính $\\int (\\delta Q/T)_{tn}$.',
+        law: 'Với quá trình thuận nghịch, $\\oint \\frac{\\delta Q}{T} = 0$, nên tích phân $\\Delta S = S_2 - S_1 = \\int_1^2 \\left(\\frac{\\delta Q}{T}\\right)_{tn}$ không phụ thuộc đường đi: $S$ là một hàm trạng thái gọi là Entropi (đơn vị J/K). Với quá trình bất kỳ: $\\Delta S \\ge \\int_1^2 \\frac{\\delta Q}{T}$. Riêng hệ cô lập ($\\delta Q = 0$): $\\Delta S \\ge 0$ — Entropi tăng trong mọi quá trình thực tế, xác định chiều diễn biến tự nhiên và đạt cực đại ở trạng thái cân bằng ($S = k\\ln W$).',
+        trap: 'Để tính $\\Delta S$ của một quá trình bất thuận nghịch (như dãn nở tự do vào chân không hay trộn nước nóng–lạnh), không lấy $\\int \\delta Q/T$ dọc theo quá trình thực tế (nếu thấy $\\delta Q = 0$ rất dễ kết luận nhầm rằng $\\Delta S = 0$). Vì $S$ là hàm trạng thái, phải thay bằng một quá trình thuận nghịch tưởng tượng nối cùng hai trạng thái đầu–cuối rồi tính $\\int (\\delta Q/T)_{tn}$.',
         consequence: 'Diện tích dưới đường cong trên giản đồ $T-S$ là nhiệt lượng trao đổi $Q = \\int T\\,dS$ trong quá trình thuận nghịch.',
         pdfRefs: [
           { label: 'Bài 11.5–11.7 & 11.9 (tr. 12–13 PDF): Biến thiên Entropi & đồ thị T–S', page: 12, note: 'Tính $\\Delta S = \\int mc\\,dT/T + mL/T_{cp}$ và đọc nhiệt lượng từ diện tích trên đồ thị $T-S$.' },

@@ -56,7 +56,7 @@ export function mountChoice(root, q, done, { allowRetry = false } = {}) {
 export function mountFormula(root, cfg, done, { idPrefix = 'f' } = {}) {
   const targets = cfg.targets.filter((t) => t.expr);
   const keys = [...Object.keys(cfg.vars)];
-  const lead = cfg.lead || 'Viết biểu thức chữ theo các đại lượng của đề. Web thử biểu thức của bạn với nhiều bộ số, nên mọi cách viết tương đương đều được chấp nhận.';
+  const lead = cfg.lead || 'Nhập biểu thức theo các ký hiệu của đề bài. Hệ thống sẽ kiểm tra bằng nhiều bộ giá trị khác nhau, nên mọi cách viết tương đương về mặt toán học đều được chấp nhận.';
   root.innerHTML = `
     <p class="lead">${rich(lead)}</p>
     <p class="hint">Gõ được: <code>m1</code>, <code>sin(α)</code>, <code>tg α</code>, <code>ln(...)</code>, <code>sqrt(...)</code>, <code>x^2</code>, phép nhân có thể bỏ dấu (<code>2g</code>) hoặc cách nhau (<code>n R T</code>). Số thập phân dùng dấu chấm.${cfg.hint ? ` ${esc(cfg.hint)}` : ''}</p>
@@ -84,9 +84,9 @@ export function mountFormula(root, cfg, done, { idPrefix = 'f' } = {}) {
     const show = () => {
       if (!input.value.trim()) { preview.innerHTML = ''; return; }
       try {
-        preview.innerHTML = `<span class="label">Web đọc là</span>${tex(toTex(parse(input.value)))}`;
+        preview.innerHTML = `<span class="label">Biểu thức nhận diện:</span>${tex(toTex(parse(input.value)))}`;
       } catch (e) {
-        preview.innerHTML = e instanceof ExprError ? `<span class="label">Chưa đọc được:</span>${esc(e.message)}` : '';
+        preview.innerHTML = e instanceof ExprError ? `<span class="label">Chưa hiểu cú pháp:</span>${esc(e.message)}` : '';
       }
     };
     input.addEventListener('input', () => { solved.delete(t.key); field.querySelector('.fb').innerHTML = ''; show(); });

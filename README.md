@@ -24,6 +24,10 @@ Mục lục dùng **11 chương của `docs/pdf_slides_from_teacher/De cuong Co-
 
 Các quyết định đối chiếu tài liệu, quy ước vật lý và giới hạn kiểm tra được ghi trong [docs/RESEARCH.md](docs/RESEARCH.md).
 
+Mục lục nhóm câu hỏi bản chất và bài tính toán dưới từng chủ đề. Trang bài học cho đọc quy luật ngay, đi qua ví dụ và tự kiểm tra; trang bài tập có đường ôn đúng chặng rồi trở lại bài đang giải. Cơ sở nghiên cứu, ánh xạ dùng chung và những chặng còn thiếu bài luyện riêng nằm trong [docs/LEARNING-DESIGN.md](docs/LEARNING-DESIGN.md).
+
+Kết quả kiểm tra giao diện và giới hạn được ghi ở [docs/LEARNING-VALIDATION.md](docs/LEARNING-VALIDATION.md). Mở `tests/browser.html` qua HTTP để chạy các luồng kiểm tra trong trình duyệt, gồm điều hướng hai chiều, tiến độ, công thức và toàn bộ trang chương/bài.
+
 Đính chính đã ghi trên web: Bài 3.8 (đáp số thời gian và công thức a_max in sai trong PDF).
 
 ## Chạy trên máy

@@ -1,6 +1,7 @@
 // Trang một bài tập: đề → cơ sở lý thuyết theo logic → dự đoán → hệ quy chiếu → sơ đồ lực → công thức → thay số → lời giải mẫu.
 import { PROBLEMS, CHAPTERS, SOURCES, byId, groupOf, GROUP_NAMES, findStage } from '../data/index.js';
 import { givenValues } from '../data/util.js';
+import { problemContext } from '../data/learningPath.js';
 import { checkNumber, fmt } from '../core/grader.js';
 import { getProgress, markStep } from '../core/progress.js';
 import { mountChoice, mountFormula } from '../ui/exercises.js';
@@ -25,6 +26,10 @@ if (!P) {
 function render() {
   const ch = CHAPTERS.find((c) => c.n === P.ch);
   const stInfo = P.logic ? findStage(P.logic.theoryRef) : null;
+  const context = problemContext(P);
+  const theoryURL = `lythuyet.html?ch=${ch.n}&from=${P.id}${P.logic ? `#${P.logic.theoryRef}` : ''}`;
+  const group = groupOf(P);
+  const nextPractice = group[group.indexOf(P) + 1] || (context?.next?.group !== P.group ? context?.next : null);
   document.title = `Bài ${P.id}${P.star ? '*' : ''}: ${P.title} – Tiệm Cận`;
   document.getElementById('crumbs').innerHTML = `<a href="./#ch${ch.n}">Chương ${ch.n}. ${esc(ch.title)}</a><span aria-hidden="true">/</span><a href="lythuyet.html?ch=${ch.n}">Lý thuyết</a>`;
 
@@ -48,28 +53,30 @@ function render() {
     <header class="problem-head">
       <h1>${esc(P.title)}</h1>
       <p class="meta">Bài ${P.id}${P.star ? '<span class="star">*</span>' : ''} · Chương ${ch.n}: ${esc(ch.title)}.</p>
+      <p class="lead">${esc(GROUP_NAMES[P.group] || 'Luyện giải bài')}: đọc đề, chọn mô hình rồi lập công thức trước khi thay số.</p>
     </header>
     <div class="layout">
       <div class="col-lead">
         <blockquote class="statement">${rich(P.statement)}</blockquote>
-        <p class="source">${P.adapted ? 'Đề diễn đạt lại từ' : 'Đề chép từ'} <a href="${encodeURI(SOURCES.exercises)}#page=${P.page}" target="_blank" rel="noopener">Bài tập Cơ – Nhiệt, trang ${P.page}</a>.${ch.slide ? ` <a href="${encodeURI(ch.slide)}" target="_blank" rel="noopener">Đọc bài giảng chương ${ch.n}</a>.` : ''}</p>
+        <p class="source">${P.adapted ? 'Diễn đạt lại từ' : 'Trích từ'} <a href="${encodeURI(SOURCES.exercises)}#page=${P.page}" target="_blank" rel="noopener">Bài tập Cơ – Nhiệt, trang ${P.page}</a>.${ch.slide ? ` <a href="${encodeURI(ch.slide)}" target="_blank" rel="noopener">Đọc bài giảng chương ${ch.n}</a>.` : ''}</p>
         ${P.errata ? `<div class="notice errata"><strong>Đính chính đáp số trong PDF.</strong> ${rich(P.errata)}</div>` : ''}
-        ${P.sample ? `<div class="notice sample"><strong>Bài có số liệu luyện tập tự chọn.</strong> Các giá trị không nêu trong đề được web đặt thêm để bạn luyện thay số.</div>` : ''}
+        ${P.sample ? `<div class="notice sample"><strong>Bài bổ sung số liệu luyện tập.</strong> Một số giá trị không nêu trong đề gốc được bổ sung sẵn để bạn luyện thay số.</div>` : ''}
         ${P.logic ? `<section class="theory-bridge" aria-labelledby="bridge-h">
           <div class="bridge-head">
             <div>
-              <p class="eyebrow">Cơ sở lý thuyết &amp; Mạch suy luận logic</p>
+              <p class="eyebrow">Kiến thức dùng trong bài</p>
               <h2 id="bridge-h">${stInfo ? esc(stInfo.stage.title) : 'Nguyên tắc giải bài'}</h2>
             </div>
-            <a class="resource-link" href="lythuyet.html?ch=${ch.n}#${P.logic.theoryRef}">Học ${esc(P.logic.theoryRef)} ↗</a>
+            <a class="resource-link" href="${theoryURL}">Ôn lại chặng lý thuyết →</a>
           </div>
-          <p class="bridge-principle"><strong>Nguyên lý cốt lõi:</strong> ${rich(P.logic.principle)}</p>
-          <p class="bridge-cond"><strong>Điều kiện áp dụng &amp; Bẫy sai:</strong> ${rich(P.logic.condition)}</p>
+          <p class="bridge-principle"><strong>Nguyên lý áp dụng:</strong> ${rich(P.logic.principle)}</p>
+          <p class="bridge-cond"><strong>Điều kiện áp dụng &amp; lỗi hay gặp:</strong> ${rich(P.logic.condition)}</p>
+          ${context?.exercises.length ? `<div class="bridge-practice"><p class="hint">Nếu chưa chắc về nguyên lý, hãy làm thử câu hỏi lý thuyết trước rồi quay lại:</p><ul>${context.exercises.map((ex) => `<li><a href="lythuyet.html?ch=${ch.n}&from=${P.id}#${ex.id}">${esc(ex.id)} · ${esc(ex.title)}</a></li>`).join('')}</ul></div>` : ''}
           <details class="bridge-steps">
-            <summary>Mạch suy luận 3 bước cho bài này</summary>
+            <summary>Hướng dẫn suy luận 3 bước</summary>
             <ol>${P.logic.steps.map((s) => `<li>${rich(s)}</li>`).join('')}</ol>
           </details>
-          ${P.logic.check ? `<div class="bridge-check"><p class="eyebrow" style="margin-bottom:0.35rem">Kiểm tra nhanh theo logic</p><div id="logic-check-root"></div></div>` : ''}
+          ${P.logic.check ? `<div class="bridge-check"><p class="eyebrow" style="margin-bottom:0.35rem">Kiểm tra nhanh kiến thức</p><div id="logic-check-root"></div></div>` : ''}
         </section>` : ''}
       </div>
       <aside class="bench" aria-label="Số liệu và mô phỏng">
@@ -85,14 +92,25 @@ function render() {
         </div>` : ''}
       </aside>
       <div class="col-steps">
+        <nav class="solve-route" aria-label="Các bước giải bài">
+          <h2>Lộ trình giải bài</h2>
+          <p class="hint">Hoàn thành từng bước để mở bước tiếp theo. Nếu gặp vướng mắc, xem lại phần nguyên lý ở trên.</p>
+          <p class="solve-route-status meta" role="status"></p>
+          <ol>${steps.map((s, i) => `<li><a href="#solve-${s.key}" data-route="${s.key}"><span>${i + 1}. ${s.title}</span><span class="route-state"></span></a></li>`).join('')}</ol>
+        </nav>
         <ol class="steps">
-          ${steps.map((s) => `<li class="step" data-step="${s.key}" data-state="locked"><h2>${s.title}<span class="lock-note"></span></h2><div class="step-body"></div></li>`).join('')}
+          ${steps.map((s) => `<li class="step" id="solve-${s.key}" data-step="${s.key}" data-state="locked"><h2>${s.title}<span class="lock-note"></span></h2><div class="step-body"></div></li>`).join('')}
         </ol>
         <section class="worked" aria-labelledby="worked-h"></section>
         <nav class="group-nav" aria-label="Bài cùng dạng"></nav>
+        <section class="practice-next" aria-labelledby="practice-next-h">
+          <h2 id="practice-next-h">Tiếp tục luyện kiến thức này</h2>
+          ${nextPractice ? `<p>${nextPractice.group === P.group ? 'Làm tiếp bài cùng dạng để rèn cách lập luận với ít gợi ý hơn.' : 'Áp dụng cùng kiến thức vừa học vào một tình huống khác.'}</p><a class="btn" href="bai.html?id=${nextPractice.id}">Bài ${nextPractice.id}: ${esc(nextPractice.title)} →</a>` : '<p>Bạn đã đến bài cuối của chặng này. Hãy quay lại trang bài học để ôn tập hoặc chuyển sang chặng tiếp theo.</p>'}
+          <p><a class="resource-link" href="${theoryURL}">Trở về ${stInfo ? esc(stInfo.stage.title) : 'bài học chương này'} →</a></p>
+        </section>
         <nav class="row" style="margin-top:1.5rem" aria-label="Chuyển bài">
-          ${prev ? `<a class="btn quiet" href="bai.html?id=${prev.id}">Bài trước: ${prev.id}</a>` : ''}
-          ${next ? `<a class="btn quiet" href="bai.html?id=${next.id}">Bài sau: ${next.id}</a>` : ''}
+          ${prev ? `<a class="btn quiet" href="bai.html?id=${prev.id}">← Bài ${prev.id}</a>` : ''}
+          ${next ? `<a class="btn quiet" href="bai.html?id=${next.id}">Bài ${next.id} →</a>` : ''}
         </nav>
       </div>
     </div>
@@ -136,13 +154,22 @@ function render() {
   const stepEls = [...app.querySelectorAll('.step')];
   const refreshLocks = () => {
     let open = true;
+    let current = false;
+    let completed = 0;
     stepEls.forEach((el) => {
       const key = el.dataset.step;
       const done = prog[key] === true || getProgress(P.id)[key] === true;
       el.dataset.state = open ? (done ? 'done' : 'open') : 'locked';
-      el.querySelector('.lock-note').textContent = open ? '' : 'Mở sau khi làm bước trước';
+      el.querySelector('.lock-note').textContent = open ? '' : 'Hoàn thành bước trước để mở';
+      const route = app.querySelector(`[data-route="${key}"]`);
+      if (done) completed++;
+      route.querySelector('.route-state').textContent = done ? 'Đã đúng' : open ? 'Đang mở' : 'Chưa mở';
+      route.dataset.state = el.dataset.state;
+      route.removeAttribute('aria-current');
+      if (open && !done && !current) { route.setAttribute('aria-current', 'step'); current = true; }
       if (!attempted.has(key)) open = false;
     });
+    app.querySelector('.solve-route-status').textContent = `Đã hoàn thành ${completed}/${steps.length} bước của đề gốc.`;
     simGate();
     renderWorked();
   };
@@ -207,15 +234,15 @@ function render() {
     const opened = sec.dataset.opened ? +sec.dataset.opened : 0;
     if (visible === total && !sec.dataset.full) {
       sec.innerHTML = `<h2 id="worked-h">Lời giải mẫu</h2>
-        <p class="lead">Bài ${pos + 1}/${group.length} của dạng "${GROUP_NAMES[P.group]}" có lời giải mẫu đầy đủ. Nên tự thử các bước trên trước, rồi mở lời giải để đối chiếu.</p>
+        <p class="lead">Bài ${pos + 1}/${group.length} thuộc dạng "${GROUP_NAMES[P.group]}" có lời giải mẫu đầy đủ. Bạn nên tự làm các bước trên trước khi mở lời giải để đối chiếu.</p>
         <button class="btn ghost" type="button" data-act="open-full">Xem lời giải mẫu</button>`;
       sec.querySelector('[data-act="open-full"]').addEventListener('click', () => { sec.dataset.full = '1'; renderWorked(); });
       renderGroupNav(group);
       return;
     }
     const lead = visible === total
-      ? `Bài ${pos + 1}/${group.length} của dạng "${GROUP_NAMES[P.group]}": lời giải mẫu đầy đủ. Đọc kỹ từng bước, rồi thử bài sau cùng dạng.`
-      : `Bài ${pos + 1}/${group.length} của dạng "${GROUP_NAMES[P.group]}": ${total - visible} bước cuối được ẩn để bạn tự làm. ${canOpen ? 'Mở từng bước để đối chiếu.' : 'Các bước ẩn mở được sau khi bạn đã thử lập công thức hoặc thay số.'}`;
+      ? `Bài ${pos + 1}/${group.length} thuộc dạng "${GROUP_NAMES[P.group]}": lời giải mẫu đầy đủ. Hãy đọc kỹ từng bước trước khi chuyển sang bài tiếp theo.`
+      : `Bài ${pos + 1}/${group.length} thuộc dạng "${GROUP_NAMES[P.group]}": ${total - visible} bước cuối được ẩn để bạn tự rèn luyện. ${canOpen ? 'Bạn có thể mở từng bước để đối chiếu.' : 'Hãy thử lập công thức hoặc thay số trước để mở các bước này.'}`;
     sec.innerHTML = `
       <h2 id="worked-h">Lời giải mẫu</h2>
       <p class="lead">${lead}</p>
@@ -234,7 +261,7 @@ function render() {
 
   function renderGroupNav(group) {
     const nav = app.querySelector('.group-nav');
-    nav.innerHTML = group.length > 1 ? `Cùng dạng "${esc(GROUP_NAMES[P.group])}", theo thứ tự từ có lời giải đủ đến tự làm:
+    nav.innerHTML = group.length > 1 ? `Các bài cùng dạng "${esc(GROUP_NAMES[P.group])}" (xếp theo mức độ giảm dần gợi ý):
       <ol>${group.map((g) => `<li><a class="chip" href="bai.html?id=${g.id}" ${g === P ? 'aria-current="page" style="border-color:var(--pen)"' : ''}>${g.id}${g.star ? '<span class="star">*</span>' : ''}</a></li>`).join('')}</ol>` : '';
   }
 
@@ -242,7 +269,7 @@ function render() {
   function numberStep(root, done) {
     const out = P.model(values);
     root.innerHTML = `
-      <p class="lead">${practice ? 'Dùng số liệu luyện tập ở bảng bên.' : 'Dùng số liệu ở bảng bên.'} Nếu cần, lấy g = 9,8 m/s². Web chấp nhận sai số 1%. Gõ số thập phân bằng dấu phẩy hoặc dấu chấm đều được.</p>
+      <p class="lead">${practice ? 'Dùng số liệu luyện tập ở bảng bên' : 'Dùng số liệu ở bảng bên'} (lấy g = 9,8 m/s² nếu cần). Hệ thống chấp nhận sai số 1%; bạn có thể nhập số thập phân bằng dấu phẩy hoặc dấu chấm.</p>
       ${P.targets.map((t, i) => `
         <div class="field" data-t="${t.key}">
           <label for="n-${i}">${tex(t.sym)} <span class="unit">(${esc(t.label)}${t.unit ? `, ${esc(t.unit)}` : ''})</span></label>
@@ -266,7 +293,7 @@ function render() {
         if (r.ok) {
           solved.add(t.key);
           const pdfNote = !practice && t.pdfNote ? ` ${t.pdfNote}` : '';
-          fb.innerHTML = `<div class="feedback ok">Đúng. Giá trị chính xác hơn: ${fmt(target, 4)}${t.unit ? ` ${esc(t.unit)}` : ''}.${esc(pdfNote)}</div>`;
+          fb.innerHTML = `<div class="feedback ok">Chính xác. Kết quả đầy đủ: ${fmt(target, 4)}${t.unit ? ` ${esc(t.unit)}` : ''}.${esc(pdfNote)}</div>`;
         } else {
           solved.delete(t.key);
           wrong++;

@@ -60,7 +60,7 @@ export const PROBES = {
     ],
   },
   'T3.4': {
-    q: 'Bạn đứng trong thang máy đang đi lên và chậm dần. Số chỉ cân dưới chân so với khi thang đứng yên?',
+    q: 'Bạn đứng trong thang máy đang đi lên và chậm dần. Số chỉ của cân dưới chân thay đổi thế nào so với khi thang máy đứng yên?',
     options: [
       { text: 'Nhỏ hơn, vì gia tốc hướng xuống', ok: true, why: 'Đúng. Chiều gia tốc quyết định số cân, không phải chiều chuyển động.' },
       { text: 'Lớn hơn, vì thang đang đi lên', ok: false, why: 'Đi lên chậm dần có gia tốc hướng xuống, nên phản lực sàn nhỏ hơn trọng lượng.' },
@@ -74,7 +74,7 @@ export const PROBES = {
     ],
   },
   'T4.2': {
-    q: 'Một vật trượt không ma sát từ hai dốc có hình dạng khác nhau nhưng cùng độ cao. Tốc độ ở chân dốc?',
+    q: 'Một vật trượt không ma sát từ hai dốc có hình dạng khác nhau nhưng cùng độ cao. Tốc độ của vật ở chân hai dốc thế nào?',
     options: [
       { text: 'Bằng nhau, vì chỉ phụ thuộc độ giảm thế năng', ok: true, why: 'Đúng. Phản lực không sinh công nên cơ năng bảo toàn, tốc độ chỉ phụ thuộc độ cao.' },
       { text: 'Dốc thoải hơn cho tốc độ lớn hơn', ok: false, why: 'Dốc thoải đi lâu hơn nhưng cuối cùng tốc độ vẫn như nhau.' },
@@ -88,16 +88,16 @@ export const PROBES = {
     ],
   },
   'T5.1': {
-    q: 'Một người đi từ đầu này sang đầu kia của chiếc thuyền trên mặt nước lặng. Khối tâm của hệ người + thuyền?',
+    q: 'Một người đi từ đầu này sang đầu kia của chiếc thuyền trên mặt nước lặng. Khối tâm của hệ người và thuyền sẽ thế nào?',
     options: [
       { text: 'Đứng yên, vì nội lực không làm đổi chuyển động khối tâm', ok: true, why: 'Đúng. Chỉ ngoại lực mới làm khối tâm có gia tốc, thuyền sẽ trôi ngược lại.' },
       { text: 'Dịch về phía người đi', ok: false, why: 'Lực người đẩy thuyền là nội lực của hệ.' },
     ],
   },
   'T5.2': {
-    q: 'Ròng rọc có khối lượng quay khi kéo vật. Lực căng dây hai bên ròng rọc?',
+    q: 'Ròng rọc có khối lượng quay khi kéo vật. Lực căng dây ở hai nhánh bên ròng rọc thế nào?',
     options: [
-      { text: 'Khác nhau, vì hiệu hai lực tạo mômen làm ròng rọc quay nhanh dần', ok: true, why: 'Đúng. Với ròng rọc có momen quán tính, hiệu hai lực căng nhân bán kính bằng Iβ.' },
+      { text: 'Khác nhau, vì hiệu hai lực tạo mômen làm ròng rọc quay nhanh dần', ok: true, why: 'Đúng. Với ròng rọc có mômen quán tính, hiệu hai lực căng nhân bán kính bằng Iβ.' },
       { text: 'Luôn bằng nhau', ok: false, why: 'Chỉ bằng nhau khi ròng rọc nhẹ hoặc quay đều.' },
     ],
   },
@@ -123,14 +123,14 @@ export const PROBES = {
     ],
   },
   'T6.3': {
-    q: 'Vận tốc thoát khỏi Trái Đất của một tàu 1 tấn so với tàu 10 tấn?',
+    q: 'So với tàu 1 tấn, tàu 10 tấn cần vận tốc thoát khỏi Trái Đất thế nào?',
     options: [
       { text: 'Như nhau, vì khối lượng m triệt tiêu trong phương trình cơ năng', ok: true, why: 'Đúng. Động năng và thế năng đều tỉ lệ m nên vận tốc thoát không phụ thuộc m.' },
       { text: 'Tàu nặng cần vận tốc lớn hơn', ok: false, why: 'Tàu nặng cần nhiều năng lượng hơn, nhưng vận tốc thoát thì không đổi.' },
     ],
   },
   'T7.1': {
-    q: 'Một phi công bật đèn pha khi tàu chạy với tốc độ 0,5c. Người đứng yên đo tốc độ ánh sáng của đèn là?',
+    q: 'Một phi công bật đèn pha khi tàu chạy với tốc độ 0,5c. Người đứng yên trên mặt đất đo được tốc độ ánh sáng từ đèn là bao nhiêu?',
     options: [
       { text: 'c, không phải 1,5c', ok: true, why: 'Đúng. Tiên đề Einstein: tốc độ ánh sáng trong chân không như nhau trong mọi hệ quán tính.' },
       { text: '1,5c theo quy tắc cộng vận tốc', ok: false, why: 'Quy tắc cộng Galileo không còn đúng ở tốc độ gần c.' },
@@ -144,7 +144,7 @@ export const PROBES = {
     ],
   },
   'T7.3': {
-    q: 'Một hạt chuyển động với tốc độ 0,9c. Động năng của nó có tính bằng nửa m₀v² không?',
+    q: 'Một hạt chuyển động với tốc độ 0,9c. Động năng của nó có tính được bằng ½ m₀v² không?',
     options: [
       { text: 'Không; phải dùng K = (γ − 1)m₀c²', ok: true, why: 'Đúng. Công thức Newton chỉ là giới hạn khi v rất nhỏ so với c.' },
       { text: 'Có, công thức đó luôn đúng', ok: false, why: 'Ở 0,9c sai số rất lớn.' },
@@ -158,14 +158,14 @@ export const PROBES = {
     ],
   },
   'T8.2': {
-    q: 'Nhiệt độ tăng thêm 20 °C thì trên thang Kelvin tăng thêm?',
+    q: 'Khi nhiệt độ tăng thêm 20 °C thì trên thang Kelvin tăng thêm bao nhiêu?',
     options: [
       { text: '20 K', ok: true, why: 'Đúng. Một độ chia của hai thang bằng nhau nên độ biến thiên giống nhau.' },
       { text: '293 K', ok: false, why: '293 K là giá trị nhiệt độ ứng với 20 °C, không phải độ biến thiên.' },
     ],
   },
   'T8.3': {
-    q: 'Nung nóng tấm kim loại có khoét lỗ tròn ở giữa. Lỗ?',
+    q: 'Khi nung nóng một tấm kim loại có khoét lỗ tròn ở giữa, lỗ tròn sẽ thế nào?',
     options: [
       { text: 'Nở to ra, như thể lỗ cũng là kim loại', ok: true, why: 'Đúng. Mọi khoảng cách giữa hai điểm trên vật đều tăng cùng hệ số.' },
       { text: 'Co nhỏ lại vì kim loại nở vào trong', ok: false, why: 'Kim loại nở theo mọi hướng, kéo giãn cả lỗ.' },
@@ -179,14 +179,14 @@ export const PROBES = {
     ],
   },
   'T9.2': {
-    q: 'Khí dãn nở đoạn nhiệt (không trao đổi nhiệt) và sinh công. Nhiệt độ khí?',
+    q: 'Khí dãn nở đoạn nhiệt (không trao đổi nhiệt) và sinh công. Nhiệt độ của khí thay đổi thế nào?',
     options: [
       { text: 'Giảm, vì khí dùng chính nội năng để sinh công', ok: true, why: 'Đúng. Q = 0 nên ΔU = −A, A > 0 thì nội năng và nhiệt độ giảm.' },
       { text: 'Không đổi', ok: false, why: 'Đó là quá trình đẳng nhiệt, cần nhận nhiệt từ ngoài.' },
     ],
   },
   'T9.3': {
-    q: 'Cấp nhiệt cho cục đá ở −10 °C. Khi nhiệt độ đạt 0 °C đá bắt đầu nóng chảy. Trong lúc nóng chảy, nhiệt độ?',
+    q: 'Cấp nhiệt cho cục đá ở −10 °C. Khi nhiệt độ đạt 0 °C đá bắt đầu nóng chảy. Trong suốt quá trình nóng chảy, nhiệt độ của khối đá thay đổi thế nào?',
     options: [
       { text: 'Giữ 0 °C đến khi đá tan hết', ok: true, why: 'Đúng. Nhiệt cấp vào dùng cho chuyển pha (Q = mλ), không làm tăng nhiệt độ.' },
       { text: 'Tiếp tục tăng đều', ok: false, why: 'Chỉ tăng đều khi không có chuyển pha.' },
@@ -228,10 +228,10 @@ export const PROBES = {
     ],
   },
   'T11.3': {
-    q: 'Một hệ cô lập thực hiện quá trình tự phát. Entropy của hệ?',
+    q: 'Một hệ cô lập thực hiện quá trình tự phát. Entropi của hệ thay đổi thế nào?',
     options: [
-      { text: 'Không giảm; quá trình thuận nghịch giữ nguyên, bất thuận nghịch làm tăng', ok: true, why: 'Đúng. Entropy hệ cô lập luôn không giảm.' },
-      { text: 'Có thể giảm nếu hệ tự sắp xếp trật tự hơn', ok: false, why: 'Hệ cô lập không tự giảm entropy.' },
+      { text: 'Không giảm; quá trình thuận nghịch giữ nguyên, bất thuận nghịch làm tăng', ok: true, why: 'Đúng. Entropi hệ cô lập luôn không giảm.' },
+      { text: 'Có thể giảm nếu hệ tự sắp xếp trật tự hơn', ok: false, why: 'Hệ cô lập không tự giảm entropi.' },
     ],
   },
 };

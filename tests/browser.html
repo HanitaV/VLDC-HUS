@@ -18,6 +18,20 @@
   const lines = [];
   const check = (ok, name) => { if (!ok) throw new Error(name); lines.push(`PASS ${name}`); result.textContent = lines.join('\n'); };
   const load = (url) => new Promise((resolve, reject) => {
+    const target = new URL(url, location.href);
+    const current = frame.contentWindow.location;
+    if (current.origin === target.origin && current.pathname === target.pathname && current.search === target.search) {
+      if (current.hash === target.hash) {
+        frame.onload = () => resolve(frame.contentDocument);
+        frame.onerror = reject;
+        current.reload();
+      }
+      else {
+        frame.contentWindow.addEventListener('hashchange', () => resolve(frame.contentDocument), { once: true });
+        current.hash = target.hash;
+      }
+      return;
+    }
     frame.onload = () => resolve(frame.contentDocument);
     frame.onerror = reject;
     frame.src = url;
@@ -29,16 +43,21 @@
     return el;
   };
   const clickCheck = (doc, selector) => doc.querySelector(selector).closest('.field').querySelector('[data-check]').click();
+  const hashNavigation = (navigate) => new Promise((resolve) => {
+    frame.contentWindow.addEventListener('hashchange', () => resolve(frame.contentDocument), { once: true });
+    navigate();
+  });
   try {
     localStorage.setItem(key, '{}');
     let doc = await load('../index.html');
-    check(doc.querySelectorAll('.toc-ch').length === 11 && doc.querySelectorAll('.chips .chip').length === 31 && doc.querySelectorAll('.tchips .tchip').length === 35, 'Mục lục 11 chương, 35 bài lý thuyết, 31 bài tính toán');
+    const calculationIDs = new Set([...doc.querySelectorAll('.practice-item[href^="bai.html"]')].map((a) => a.getAttribute('href')));
+    check(doc.querySelectorAll('.toc-ch').length === 11 && calculationIDs.size === 31 && doc.querySelectorAll('.practice-item[href^="lythuyet.html"]').length === 35, 'Mục lục 11 chương, 35 bài lý thuyết, 31 bài tính toán theo chủ đề');
     input(doc, '#search', 'ĐỘNG HỌC');
-    check(doc.querySelectorAll('.toc-ch').length === 2, 'Tìm kiếm chữ hoa có dấu');
+    check(doc.querySelector('#ch2') && doc.querySelector('#ch10'), 'Tìm kiếm chữ hoa có dấu trong chương và chủ đề');
     input(doc, '#search', 'ma sat');
-    check(doc.querySelectorAll('.chips .chip').length > 0, 'Tìm kiếm tiếng Việt không dấu');
+    check(doc.querySelectorAll('.practice-item[href^="bai.html"]').length > 0, 'Tìm kiếm tiếng Việt không dấu');
     input(doc, '#search', '4.10');
-    check(doc.querySelectorAll('.chips .chip').length === 1 && doc.querySelector('.chips .chip').href.endsWith('bai.html?id=4.10'), 'Tìm đúng số bài');
+    check(doc.querySelectorAll('.practice-item[href^="bai.html"]').length === 1 && doc.querySelector('.practice-item[href^="bai.html"]').href.endsWith('bai.html?id=4.10'), 'Tìm đúng số bài');
     input(doc, '#search', 'khongtontai');
     check(!!doc.querySelector('.empty-results'), 'Trạng thái không có kết quả');
     localStorage.setItem(key, JSON.stringify({ '2.1': { number: true } }));
@@ -46,7 +65,7 @@
     const status = doc.querySelector('#status');
     status.value = 'done';
     status.dispatchEvent(new frame.contentWindow.Event('change'));
-    check(doc.querySelectorAll('.chips .chip').length === 1 && doc.querySelector('.chip.done'), 'Lọc bài hoàn thành');
+    check(doc.querySelectorAll('.practice-item[href^="bai.html"]').length === 1 && doc.querySelector('.practice-item.done'), 'Lọc bài hoàn thành');
 
     localStorage.setItem(key, '{}');
     doc = await load('../bai.html?id=4.4');
@@ -66,12 +85,14 @@
     localStorage.setItem(key, '{}');
     doc = await load('../bai.html?id=4.9');
     input(doc, '#f-0', '(m*v/M)^2/(2*mu*g)'); clickCheck(doc, '#f-0');
+    check(doc.querySelector('[data-route="formula"]').dataset.state === 'done' && doc.querySelector('[data-route="number"]').getAttribute('aria-current') === 'step' && doc.querySelector('.solve-route-status').textContent.includes('1/2'), 'Lộ trình cập nhật bước đúng và bước tiếp theo sau khi lập công thức');
     doc.querySelector('[data-act="vary"]').click();
     const data = givenValues(byId('4.9'));
     const shown = doc.querySelector('.given tbody tr:nth-child(3) td').textContent;
     data.v = Number(shown.match(/=\s*([\d,]+)/)[1].replace(',', '.'));
     input(doc, '#n-0', String(byId('4.9').model(data).S)); clickCheck(doc, '#n-0');
     check(JSON.parse(localStorage.getItem(key))['4.9'].number !== true, 'Đổi số liệu không ghi hoàn thành đề gốc');
+    check(doc.querySelector('.solve-route-status').textContent.includes('1/2'), 'Lộ trình giữ riêng tiến độ đề gốc khi thay số luyện tập');
     for (const p of PROBLEMS) {
       doc = await load(`../bai.html?id=${p.id}`);
       if (doc.querySelector('h1')?.textContent !== p.title || !doc.querySelector('.steps') || doc.querySelector('.katex-error')) throw new Error(`Bài ${p.id} không hiển thị đúng`);
@@ -91,9 +112,9 @@
 
     doc = await load('../lythuyet.html?ch=1');
     const t11 = doc.querySelector('#T1\\.1');
-    check(!t11.hidden && t11.querySelector('[data-step="explain"]').hidden && doc.querySelector('#T1\\.2').hidden, 'Bài học hiện từng chặng, giải thích ẩn đến khi dự đoán');
+    check(!t11.hidden && !t11.querySelector('[data-step="explain"]').hidden && doc.querySelector('#T1\\.2').hidden, 'Bài học hiện từng chặng và cho đọc quy luật ngay');
     t11.querySelector('.probe-root .option').click();
-    check(!t11.querySelector('[data-step="explain"]').hidden, 'Trả lời dự đoán mở phần giải thích');
+    check(!t11.querySelector('[data-step="explain"]').hidden && !!t11.querySelector('.probe-root .feedback'), 'Dự đoán có phản hồi và giữ phần giải thích để đối chiếu');
     doc.querySelector('[data-go="1"]').click();
     check(doc.querySelector('#T1\\.1').hidden && !doc.querySelector('#T1\\.2').hidden, 'Chuyển sang chặng kế tiếp');
     const l12 = doc.querySelector('[data-ex="L1.2"]');
@@ -114,13 +135,27 @@
 
     doc = await load('../bai.html?id=2.2');
     const bridgeLink = doc.querySelector('.theory-bridge a.resource-link');
-    check(!!bridgeLink && bridgeLink.getAttribute('href') === 'lythuyet.html?ch=2#T2.1' && !!doc.querySelector('#f-0'), 'Cầu nối lý thuyết liên kết đúng chặng và không khóa bước tính toán');
+    check(!!bridgeLink && bridgeLink.getAttribute('href') === 'lythuyet.html?ch=2&from=2.2#T2.1' && !!doc.querySelector('#f-0'), 'Cầu nối lý thuyết liên kết đúng chặng, giữ bài xuất phát và không khóa bước tính toán');
+    const theoryHref = bridgeLink.getAttribute('href');
+    const conceptHref = doc.querySelector('.bridge-practice a').getAttribute('href');
     const bRight = [...doc.querySelectorAll('#logic-check-root .option')].find((b) => b.textContent.includes('chỉ tích phân diện tích'));
     bRight.click();
     check(JSON.parse(localStorage.getItem(key))['2.2'].logic === true, 'Kiểm tra nhanh logic trên trang bài lưu kết quả');
 
+    doc = await load(`../${theoryHref}`);
+    check(frame.contentWindow.location.hash === '#T2.1' && !doc.getElementById('T2.1').hidden && !doc.getElementById('T2.1').querySelector('[data-step="explain"]').hidden && doc.querySelector('.lesson-return').getAttribute('href') === 'bai.html?id=2.2', 'Ôn lý thuyết mở đúng chặng và có đường trở lại bài đang làm');
+    doc = await load(`../${conceptHref}`);
+    const conceptHash = new URL(conceptHref, frame.contentWindow.location.href).hash;
+    check(frame.contentWindow.location.hash === conceptHash && !doc.getElementById(conceptHash.slice(1)).closest('.lesson-stage').hidden, 'Liên kết câu hỏi bản chất giữ đúng mã bài và mở chặng chứa câu hỏi');
+    doc = await hashNavigation(() => { frame.contentWindow.location.hash = 'T2.3'; });
+    check(!doc.getElementById('T2.3').hidden && doc.getElementById('T2.1').hidden, 'Đổi mã chặng trong cùng trang chuyển đúng nội dung');
+    doc = await hashNavigation(() => { frame.contentWindow.history.back(); });
+    check(frame.contentWindow.location.hash === conceptHash && !doc.getElementById(conceptHash.slice(1)).closest('.lesson-stage').hidden && doc.getElementById('T2.3').hidden, 'Quay lại trong trình duyệt khôi phục câu hỏi và chặng trước');
+    doc = await load('../lythuyet.html?ch=2&from=khong-co#T2.1');
+    check(!doc.querySelector('.lesson-return'), 'Mã bài xuất phát không hợp lệ không tạo liên kết quay lại sai');
+
     doc = await load('../index.html');
-    check(doc.querySelector('.tchip[href$="#L1.2"].done') && doc.querySelector('.tchip[href$="#L1.3"].done'), 'Trang chủ đánh dấu hoàn thành các bài lý thuyết đã làm');
+    check(doc.querySelector('.practice-item[href$="#L1.2"].done') && doc.querySelector('.practice-item[href$="#L1.3"].done'), 'Trang chủ đánh dấu hoàn thành các bài lý thuyết đã làm');
     result.textContent += `\n\nPASS: ${lines.length} luồng kiểm tra`;
   } catch (error) {
     result.textContent += `\nFAIL: ${error.message}`;

@@ -10,8 +10,8 @@ export const MECH_CHAPTERS = [
         id: 'T1.1',
         title: 'Phương pháp thực nghiệm và phạm vi mô hình',
         origin: 'Vật lý bắt đầu từ quan sát hiện tượng và đo lường định lượng các đại lượng đặc trưng (không chỉ mô tả cảm tính).',
-        law: 'Từ kết quả đo, thiết lập quy luật thực nghiệm và giả thuyết → xây dựng định luật, hệ quả → hợp nhất thành thuyết vật lý rồi kiểm chứng lại bằng thí nghiệm.',
-        trap: 'Một định luật hay mô hình (như chất điểm, bỏ qua ma sát, khí lý tưởng) chỉ đúng trong giới hạn giả thiết. Áp dụng ra ngoài điều kiện biên sẽ cho kết quả sai dù biến đổi toán đúng.',
+        law: 'Từ kết quả đo, ta rút ra quy luật thực nghiệm và đặt giả thuyết, từ đó xây dựng định luật, hệ quả, hợp nhất thành thuyết vật lý rồi kiểm chứng lại bằng thí nghiệm.',
+        trap: 'Một định luật hay mô hình (như chất điểm, bỏ qua ma sát, khí lý tưởng) chỉ đúng trong giới hạn giả thiết. Áp dụng ra ngoài phạm vi giả thiết sẽ cho kết quả sai dù biến đổi toán học đúng.',
         consequence: 'Khi giải mọi bài tập, bước đầu tiên luôn là chọn mô hình và nêu rõ các giả thiết được phép dùng.',
       },
       {
@@ -26,7 +26,7 @@ export const MECH_CHAPTERS = [
   },
   {
     ch: 2,
-    summary: 'Động học mô tả chuyển động bằng hệ quy chiếu; đạo hàm tách gia tốc thành đổi độ lớn (tiếp tuyến) và đổi phương (pháp tuyến), còn tích phân v(t) cho quãng đường.',
+    summary: 'Động học mô tả chuyển động trong một hệ quy chiếu: đạo hàm tách gia tốc thành hai thành phần — đổi độ lớn (tiếp tuyến) và đổi phương (pháp tuyến), còn tích phân v(t) cho biết quãng đường.',
     stages: [
       {
         id: 'T2.1',
@@ -52,7 +52,7 @@ export const MECH_CHAPTERS = [
         origin: 'Vị trí vật trong hai hệ quy chiếu liên hệ bởi $\\vec r = \\vec r\' + \\vec R$. Đạo hàm theo thời gian thu được quy tắc cộng vận tốc $\\vec\\upsilon = \\vec\\upsilon\' + \\vec V$.',
         law: 'Vận tốc vật so với tàu bằng $\\vec\\upsilon\' = \\vec\\upsilon - \\vec\\upsilon_{\\text{tàu}}$. Nếu hai vật cùng chịu gia tốc $\\vec g$, khi lấy hiệu $\\vec r_1 - \\vec r_2$, số hạng $\\tfrac12\\vec g t^2$ tự triệt tiêu: trong hệ quy chiếu gắn với vật này, vật kia chuyển động thẳng đều.',
         trap: 'Khi đổi hệ quy chiếu, tuyệt đối không trừ đại số độ lớn nếu hai véc-tơ không cùng phương; phải viết tọa độ hoặc vẽ tam giác véc-tơ.',
-        consequence: 'Chọn đúng hệ quy chiếu chuyển động theo vật còn lại giúp biến bài toán hai vật rơi/ném thành bài chuyển động thẳng đều.',
+        consequence: 'Chọn hệ quy chiếu gắn với một trong hai vật giúp biến bài toán hai vật rơi hoặc ném thành bài toán chuyển động thẳng đều.',
         problems: ['2.5', '2.7'],
       },
     ],
@@ -66,7 +66,7 @@ export const MECH_CHAPTERS = [
         title: 'Ba định luật Newton và nguyên tắc chỉ vẽ lực thật',
         origin: 'Định luật I chọn ra hệ quy chiếu quán tính (nơi vật tự do có $\\vec a = 0$). Trong hệ đó, tương tác giữa các vật gây ra gia tốc theo Định luật II $\\sum\\vec F = m\\vec a$.',
         law: 'Mỗi lực trong $\\sum\\vec F$ phải chỉ ra được vật nào tác dụng lên vật đang xét. Theo Định luật III, $\\vec F_{12} = -\\vec F_{21}$ đặt vào hai vật khác nhau nên không bao giờ triệt tiêu nhau khi viết phương trình cho một vật.',
-        trap: 'Không có "lực ném" hay "lực đẩy theo chiều chuyển động" sau khi vật rời tay; vật vẫn lên dốc nhờ quán tính của vận tốc đầu. Trọng lực $\\vec P$ đặt lên vật, còn trọng lượng $\\vec N\'$ là lực vật đè lên giá đỡ/dây treo (bằng $N$ về độ lớn, không bằng $mg$ khi có gia tốc đứng).',
+        trap: 'Không có "lực ném" hay "lực đẩy theo chiều chuyển động" sau khi vật rời tay; vật vẫn lên dốc nhờ quán tính của vận tốc đầu. Trọng lực $\\vec P$ đặt lên vật, còn trọng lượng $\\vec N\'$ là lực vật đè lên giá đỡ hoặc dây treo (bằng $N$ về độ lớn, khác $mg$ khi có gia tốc theo phương thẳng đứng).',
         consequence: 'Luôn vẽ sơ đồ lực tách riêng từng vật trước khi chiếu phương trình và dùng liên hệ dây không dãn để ghép gia tốc.',
         problems: ['3.1', '3.2', '3.5', '3.6', '3.7'],
       },
@@ -83,7 +83,7 @@ export const MECH_CHAPTERS = [
         id: 'T3.3',
         title: 'Động lượng, xung lượng và chuyển động tên lửa',
         origin: 'Dạng tổng quát của Định luật II là $\\vec F = d\\vec P/dt$ với $\\vec P = m\\vec\\upsilon$. Nhân $dt$ rồi tích phân theo thời gian cho định lý biến thiên động lượng $\\Delta\\vec P = \\vec J = \\int \\vec F\\,dt$.',
-        law: 'Khi hệ cô lập ($\\sum\\vec F_{ng} = 0$), động lượng toàn phần bảo toàn. Với tên lửa phụt lượng khí $dm$ có vận tốc $\\vec u$ so với tên lửa, bảo toàn động lượng hệ tên lửa + khí cho $m\\,d\\vec\\upsilon + \\vec u\\,dm = 0$, tích phân từ $m_0$ đến $m$ (với $\\upsilon_0=0$) được công thức Tsiolkovsky $\\upsilon = u\\ln(m_0/m)$.',
+        law: 'Khi hệ cô lập ($\\sum\\vec F_{ng} = 0$), động lượng toàn phần bảo toàn. Với tên lửa phụt lượng khí $dm$ có vận tốc $\\vec u$ so với tên lửa, bảo toàn động lượng hệ tên lửa + khí cho $m\\,d\\vec\\upsilon + \\vec u\\,dm = 0$, tích phân từ $m_0$ đến $m$ (với $\\upsilon_0=0$) ta được công thức Tsiolkovsky $\\upsilon = u\\ln(m_0/m)$.',
         trap: 'Vận tốc phụt khí $u$ trong công thức Tsiolkovsky là vận tốc tương đối so với tên lửa, không phải so với mặt đất; tên lửa tăng tốc được là nhờ đẩy vào chính dòng khí phụt ra, không phải nhờ "đẩy vào không khí".',
         consequence: 'Khi vật có khối lượng biến thiên hoặc tương tác ngắn, xuất phát từ $d\\vec P/dt = \\vec F_{ng}$ thay vì $m\\vec a$.',
         pdfRefs: [{ label: 'Slide 3.3 – Tên lửa (công thức Tsiolkovsky)', page: 2, note: 'Làm nền cho các bài bảo toàn động lượng Chương 4.' }],
@@ -101,7 +101,7 @@ export const MECH_CHAPTERS = [
   },
   {
     ch: 4,
-    summary: 'Công của mọi lực đổi động năng; riêng lực thế cất vào thế năng nên cơ năng chỉ bảo toàn khi không có công của lực không thế — còn trong va chạm phải tách riêng pha bảo toàn động lượng.',
+    summary: 'Công của mọi lực làm biến thiên động năng. Riêng lực thế gắn với thế năng, nên cơ năng chỉ bảo toàn khi không có công của lực không thế; còn trong bài toán va chạm, cần tách riêng giai đoạn va chạm để áp dụng bảo toàn động lượng.',
     stages: [
       {
         id: 'T4.1',
@@ -142,7 +142,7 @@ export const MECH_CHAPTERS = [
         origin: 'Viết $\\vec F_i + \\vec f_i = m_i \\vec a_i$ cho từng hạt rồi cộng tất cả $N$ hạt lại. Theo Định luật III Newton, các cặp nội lực $\\vec f_{ij} + \\vec f_{ji} = 0$ tự triệt tiêu hoàn toàn.',
         law: 'Định nghĩa khối tâm $\\vec r_C = \\frac{\\sum m_i \\vec r_i}{m}$ (hoặc $\\frac{1}{m}\\int \\vec r\\,dm$) dẫn tới phương trình $m\\vec a_C = \\sum\\vec F_{\\text{ngoại}}$. Nếu tổng ngoại lực theo một phương bằng 0 và ban đầu đứng yên, tọa độ khối tâm theo phương đó giữ nguyên vị trí.',
         trap: 'Nội lực (như người đi lại trên thuyền) làm từng vật dịch chuyển, nhưng không thể làm dịch chuyển khối tâm của hệ cô lập trên mặt nước lặng.',
-        consequence: 'Bài tìm vị trí khối tâm vật khoét dùng nguyên lý cộng/trừ khối lượng âm; bài người đi trên thuyền chỉ cần viết $x_C^{\\text{đầu}} = x_C^{\\text{cuối}}$.',
+        consequence: 'Để tìm khối tâm của vật bị khoét lỗ, ta coi phần khoét có khối lượng âm rồi áp dụng phép cộng đại số; với bài người đi trên thuyền, chỉ cần viết $x_C^{\\text{đầu}} = x_C^{\\text{cuối}}$.',
         pdfRefs: [
           { label: 'Bài 5.1 (tr. 7 PDF): Khối tâm tấm khoét', page: 7, note: 'Coi phần khoét có khối lượng âm để tính tọa độ khối tâm.' },
           { label: 'Bài 5.2 (tr. 7 PDF): Thuyền dịch chuyển khi đổi chỗ', page: 7, note: 'Hệ cô lập theo phương ngang nên $x_C$ không đổi.' },
@@ -153,7 +153,7 @@ export const MECH_CHAPTERS = [
         title: 'Phương trình quay quanh trục cố định và định lý Steiner–Huygens',
         origin: 'Lực $\\vec F$ tác dụng vào vật rắn quay quanh trục cố định chỉ làm quay nhờ thành phần tiếp tuyến qua mômen lực $\\vec M = \\vec r \\times \\vec F$.',
         law: 'Nhân hữu hướng $\\vec r_i$ vào $m_i\\vec a_i$ rồi lấy tổng toàn vật rắn thu được $\\sum M_{\\text{ngoại}} = I\\beta$, với mômen quán tính $I = \\int r^2\\,dm$ đo mức quán tính quay. Khi trục quay song song và cách trục qua khối tâm một đoạn $d$, định lý Steiner–Huygens cho $I = I_0 + m d^2$.',
-        trap: 'Nếu ròng rọc có khối lượng ($I > 0$), sức căng hai bên dây nối không còn bằng nhau ($T_1 \\ne T_2$) vì chính hiệu $(T_1 - T_2)R = I\\beta$ mới tạo ra gia tốc góc cho ròng rọc! Và $I = I_0 + md^2$ chỉ đúng khi $I_0$ là trục đi qua đúng khối tâm $C$, không dùng cho hai trục bất kỳ không qua $C$.',
+        trap: 'Nếu ròng rọc có khối lượng ($I > 0$), sức căng hai bên dây nối không còn bằng nhau ($T_1 \\ne T_2$) vì chính hiệu $(T_1 - T_2)R = I\\beta$ mới tạo ra gia tốc góc cho ròng rọc. Ngoài ra, $I = I_0 + md^2$ chỉ đúng khi $I_0$ là trục đi qua đúng khối tâm $C$, không dùng cho hai trục bất kỳ không qua $C$.',
         consequence: 'Kết hợp phương trình tịnh tiến vật nặng, phương trình quay $\\sum M = I\\beta$ của ròng rọc và điều kiện dây không trượt $a = \\beta R$.',
         pdfRefs: [
           { label: 'Bài 5.3–5.4 (tr. 7 PDF): Mômen quán tính & đĩa khoét', page: 7, note: 'Tích phân định nghĩa $I$ và áp dụng Steiner–Huygens cho lỗ khoét lệch tâm.' },
@@ -165,7 +165,7 @@ export const MECH_CHAPTERS = [
         title: 'Mômen động lượng và động năng lăn không trượt',
         origin: 'Đạo hàm mômen động lượng $\\vec L = \\sum \\vec r_i \\times m_i\\vec\\upsilon_i$ cho $\\frac{d\\vec L}{dt} = \\vec M_{\\text{ngoại}}$ vì $\\vec\\upsilon_i \\times m_i\\vec\\upsilon_i = 0$ và mômen của cặp nội lực trực đối cùng giá triệt tiêu.',
         law: 'Khi tổng mômen ngoại lực bằng 0 thì $L = I\\omega$ bảo toàn ($I_1\\omega_1 + I_2\\omega_2 = (I_1+I_2)\\omega$). Khi vật rắn vừa tịnh tiến vừa lăn không trượt ($\\upsilon_C = \\omega R$), động năng toàn phần gồm hai phần: $E_đ = \\tfrac12 m\\upsilon_C^2 + \\tfrac12 I_C\\omega^2$.',
-        trap: 'Khi hai đĩa có ma sát trượt lên nhau rồi quay chung tốc độ góc, mômen động lượng bảo toàn (ma sát là nội lực), nhưng động năng quay lại giảm vì công ma sát tỏa nhiệt! Khi vật lăn không trượt xuống dốc, ma sát nghỉ giữ điểm tiếp xúc tức thời đứng yên nên không sinh công tiêu hao cơ năng.',
+        trap: 'Khi hai đĩa có ma sát trượt lên nhau rồi quay chung tốc độ góc, mômen động lượng bảo toàn (ma sát là nội lực), nhưng động năng quay lại giảm do ma sát sinh công âm chuyển thành nhiệt. Khi vật lăn không trượt xuống dốc, ma sát nghỉ giữ điểm tiếp xúc tức thời đứng yên nên không sinh công tiêu hao cơ năng.',
         consequence: 'Dùng bảo toàn mômen động lượng cho ghép đĩa quay, còn lăn không trượt dùng bảo toàn cơ năng với cả $\\tfrac12 m\\upsilon_C^2$ lẫn $\\tfrac12 I_C\\omega^2$.',
         pdfRefs: [
           { label: 'Bài 5.7 (tr. 8 PDF): Hai đĩa quay nhập làm một', page: 8, note: 'Bảo toàn $L = I\\omega$, tính công ma sát qua độ giảm động năng.' },

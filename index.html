@@ -22,19 +22,19 @@
   <main id="main" tabindex="-1">
     <section class="home-intro" data-enter>
       <div>
-        <p class="eyebrow">Cơ – Nhiệt · Lý thuyết logic gắn với bài tập</p>
-        <h1>Hiểu bản chất theo logic, làm bài tập từng bước.</h1>
-        <p>Mỗi chương đi từ hiện tượng xuất phát đến quy luật, bẫy hay sai và cách vận dụng, nối thẳng sang bài tập lý thuyết và tính toán tương tác.</p>
+        <p class="eyebrow">Cơ – Nhiệt (PHY1159) · Học lý thuyết gắn với bài tập</p>
+        <h1>Vật lý đại cương, học đến đâu luyện đến đó.</h1>
+        <p>Chọn một chủ đề, nắm quy luật qua ví dụ rồi áp dụng ngay vào bài tập. Khi gặp vướng mắc, bạn có thể quay lại đúng phần lý thuyết liên quan.</p>
         <div class="row">
-          <a class="btn" id="continue" href="bai.html?id=2.1">Bắt đầu luyện bài</a>
-          <a class="btn ghost" id="start-theory" href="lythuyet.html?ch=1">Học lý thuyết Chương 1</a>
+          <a class="btn" id="start-theory" href="lythuyet.html?ch=1">Học lý thuyết Chương 1</a>
+          <a class="btn ghost" id="continue" href="bai.html?id=2.1">Bắt đầu luyện bài</a>
         </div>
         <p class="home-fact" id="home-fact"></p>
       </div>
       <aside class="study-card" aria-label="Cách học và luyện bài">
-        <p class="eyebrow">Một mạch xuyên suốt 11 chương</p>
-        <ol><li>Nắm chuỗi suy luận nhân-quả &amp; điều kiện đúng của chương</li><li>Luyện 3–5 bài lý thuyết (sắp xếp, bản chất, lập biểu thức)</li><li>Áp dụng thẳng sang bài tính toán hoặc bài tập PDF</li><li>Đối chiếu bẫy sai và lưu tiến độ ngay trên trình duyệt</li></ol>
-        <p>Bạn có thể mở ngay bất kỳ chương nào để ôn lý thuyết hoặc nhảy thẳng vào bài tập đang cần.</p>
+        <p class="eyebrow">Cách học mỗi chủ đề</p>
+        <ol><li>Dự đoán hiện tượng trước khi đọc giải thích</li><li>Nắm quy luật, điều kiện áp dụng và theo dõi ví dụ mẫu</li><li>Làm câu hỏi kiểm tra để chắc chắn đã hiểu bản chất</li><li>Vận dụng vào bài tính toán tương tác hoặc tự giải theo PDF</li></ol>
+        <p>Bạn có thể mở bất kỳ chương nào để học từ đầu, hoặc vào thẳng bài tập đang cần làm.</p>
       </aside>
     </section>
     <section id="chuong" aria-labelledby="catalog-title">
@@ -43,7 +43,7 @@
         <div><label for="search">Tìm bài hoặc chủ đề</label><input class="input" type="search" id="search" placeholder="Ví dụ: 4.1, ma sát, định luật II, entropy" autocomplete="off"></div>
         <div><label for="status">Nội dung hiển thị</label><select class="input" id="status"><option value="all">Tất cả 11 chương</option><option value="ready">Có bài tính toán</option><option value="todo">Bài chưa hoàn thành</option><option value="done">Bài đã hoàn thành</option></select></div>
       </div>
-      <p class="hint">Cả 11 chương đều có mạch lý thuyết logic và bài tập lý thuyết (L1.1–L11.3). Chương 2–4 có thêm 31 bài tính toán tương tác (dấu * theo PDF).</p>
+      <p class="hint">Mở từng chương để xem các chủ đề theo đúng thứ tự học và bài tập đi kèm. Cả 11 chương đều có bài tập lý thuyết; riêng chương 2–4 có thêm 31 bài tính toán tương tác (dấu * giữ theo tài liệu gốc). Các bài còn lại xem trực tiếp trong PDF.</p>
       <p id="result-count" class="meta" role="status"></p>
       <div class="toc" id="toc"></div>
       <noscript><p>Hãy bật JavaScript để mở danh sách bài và lưu tiến độ. Bạn vẫn có thể đọc <a href="docs/pdf_slides_from_teacher/De%20cuong%20Co-Nhiet.pdf">đề cương PDF</a>.</p></noscript>
@@ -51,8 +51,8 @@
     <section id="tai-lieu" class="resources" aria-labelledby="resources-title">
       <h2 id="resources-title">Tài liệu và tiến độ học</h2>
       <div class="resource-grid">
-        <div><h3>Tài liệu của giảng viên</h3><ul id="source-links"></ul><p class="hint">Bài giảng từng chương nằm trong mục lục phía trên. Chưa có slide chương 6 và 7 trong thư mục tài liệu.</p></div>
-        <div><h3>Sao lưu tiến độ</h3><p>Tiến độ lưu trên trình duyệt này. Tải bản sao để chuyển sang máy khác hoặc giữ lại trước khi xóa dữ liệu trình duyệt.</p><button class="btn ghost" type="button" id="export">Tải tiến độ</button><div class="backup-import"><label for="import">Khôi phục từ file tiến độ JSON</label><input type="file" accept=".json,application/json" id="import" class="input"></div><p id="backup-status" role="status"></p></div>
+        <div><h3>Tài liệu của giảng viên</h3><ul id="source-links"></ul><p class="hint">Slide bài giảng của từng chương được gắn ngay trong mục lục phía trên (hiện thiếu slide chương 6 và 7).</p></div>
+        <div><h3>Sao lưu tiến độ</h3><p>Tiến độ được lưu trên trình duyệt này. Hãy tải bản sao nếu bạn muốn chuyển sang máy khác hoặc lưu lại trước khi xóa dữ liệu duyệt web.</p><button class="btn ghost" type="button" id="export">Tải tiến độ</button><div class="backup-import"><label for="import">Khôi phục từ file tiến độ JSON</label><input type="file" accept=".json,application/json" id="import" class="input"></div><p id="backup-status" role="status"></p></div>
       </div>
     </section>
   </main>
